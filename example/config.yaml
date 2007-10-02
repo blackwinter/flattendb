@@ -1,0 +1,10 @@
+object:
+  attr1: ObjID
+  attr2: ObjID
+  fooobject:
+    @key: ObjID
+    attr1: FooID
+    attr3: FooID
+  barobject:
+    @key: ObjID
+    attr4: BarID
