@@ -44,6 +44,7 @@ spec = Gem::Specification.new do |s|
                        '-c' << 'UTF-8'
 
   s.add_dependency('highline')
+  s.add_dependency('mysql')
   s.add_dependency('libxml-ruby')
   s.add_dependency('builder')
 end
