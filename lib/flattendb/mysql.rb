@@ -35,6 +35,8 @@ module FlattenDB
 
   class MySQL < Base
 
+    JOIN_KEY = '@key'
+
     attr_reader :root, :config, :output, :document, :database, :name, :tables, :builder
 
     def initialize(infile, outfile, config)
@@ -130,7 +132,9 @@ module FlattenDB
           when Array
             inject_foreign(tables, primary_table, foreign_table, *spec)
           when Hash
-            local_key, foreign_key = spec.delete('@key')
+            raise "invalid join table spec, '#{JOIN_KEY}' missing" unless spec.has_key?(JOIN_KEY)
+
+            local_key, foreign_key = spec.delete(JOIN_KEY)
             foreign_key ||= local_key
 
             joined_tables = tables.dup
