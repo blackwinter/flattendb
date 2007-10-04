@@ -1,7 +1,7 @@
 #--
 ###############################################################################
 #                                                                             #
-# A component of flattendb, the relational database flattener.                #
+# flattendb -- Flatten relational databases                                   #
 #                                                                             #
 # Copyright (C) 2007 University of Cologne,                                   #
 #                    Albertus-Magnus-Platz,                                   #
@@ -26,86 +26,15 @@
 ###############################################################################
 #++
 
-require 'rubygems'
-require 'builder'
+require 'flattendb/version'
+require 'flattendb/base'
 
 module FlattenDB
 
-  class Base
+  extend self
 
-    @types = {}
-
-    BUILDER_OPTIONS = {
-      :xml => {
-        :indent => 2
-      }
-    }
-
-    # cf. <http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name>
-    ELEMENT_START = %r{^[a-zA-Z_:]}
-    ELEMENT_CHARS = %q{\w:.-}
-
-    class << self
-
-      def types
-        Base.instance_variable_get :@types
-      end
-
-      def [](type)
-        types[type]
-      end
-
-      private
-
-      def register_type(type)
-        types[type] = self
-      end
-
-      def register_types(*types)
-        types.each { |type|
-          register_type(type)
-        }
-      end
-
-      protected
-
-      def inherited(klass)
-        register_type klass.name.split('::').last.downcase.to_sym
-      end
-
-    end
-
-    def flatten!(*args)
-      raise NotImplementedError, 'must be defined by sub-class'
-    end
-    
-    def to_xml(*args)
-      raise NotImplementedError, 'must be defined by sub-class'
-    end
-
-    private
-
-    def initialize_builder(type, output, builder_options = {})
-      builder_options = (BUILDER_OPTIONS[type] || {}).merge(builder_options)
-
-      @builder = case type
-        when :xml
-          Builder::XmlMarkup.new(builder_options.merge(:target => output))
-        else
-          raise ArgumentError, "builder of type '#{type}' not supported"
-      end
-    end
-
-    # mysql:: <http://dev.mysql.com/doc/refman/5.0/en/identifiers.html>
-    def column_to_element(column)
-      element = column.dup
-
-      element.insert(0, '_') unless element =~ ELEMENT_START
-      element.gsub!(/[^#{ELEMENT_CHARS}]/, '')
-
-      element
-    end
-
+  def [](type)
+    Base[type]
   end
 
 end

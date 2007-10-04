@@ -28,23 +28,23 @@
 ###############################################################################
 #++
 
-# NOTE: Currently, only MySQL is supported!
-
 require 'optparse'
 
 require 'rubygems'
 require 'highline/import'
-require 'mysql'
 
 $: << File.join(File.dirname(__FILE__), '..', 'lib')
 
-require 'flattendb/mysql'
+require 'flattendb'
 
 USAGE = "Usage: #{$0} [-h|--help] [options] <infile> <outfile> <configfile>"
 
 options = {
-  :intype => :xml,
-  :keep   => false
+  :type => 'mysql',
+  :mysql => {
+    :intype => :xml,
+    :keep   => false
+  }
 }
 
 OptionParser.new { |opts|
@@ -52,7 +52,16 @@ OptionParser.new { |opts|
   opts.separator ''
 
   opts.separator 'Options:'
-  opts.on('-x', '--xml', "Input file is of type XML [this is the default]") {
+  opts.on('-t', '--type TYPE', "Type of database at hand [Default: #{options[:type]}]") { |t|
+    options[:type] = t.downcase.to_sym
+  }
+
+  opts.separator ''
+  opts.separator 'Database-specific Options:'
+
+  opts.separator ''
+  opts.separator '- MySQL'
+  opts.on('-x', '--xml', "Input file is of type XML [This is the default]") {
     options[:intype] = :xml
   }
   opts.on('-s', '--sql', "Input file is of type SQL") {
@@ -61,7 +70,26 @@ OptionParser.new { |opts|
   opts.on('-k', '--keep', "Keep intermediate XML dump; only applies if input type is 'sql'") {
     options[:keep] = true
   }
+
+  opts.separator ''
+  opts.separator 'Generic options:'
+  opts.on('-h', '--help', 'Print this help message and exit') {
+    abort opts.to_s
+  }
+  opts.on('--version', 'Print program version and exit') {
+    abort "#{File.basename($0)} v#{FlattenDB::VERSION}"
+  }
 }.parse!
+
+type    = options[:type]
+options = options[type.to_sym]
+
+# Load corresponding module
+begin
+  require "flattendb/#{type}"
+rescue LoadError
+  abort "Database type '#{type}' is not supported at the moment."
+end
 
 abort USAGE unless ARGV.size == 3
 
@@ -69,46 +97,51 @@ infile, outfile, configfile = ARGV
 
 abort "Input file not found: #{infile}" unless File.readable?(infile)
 
-case options[:intype]
-  when :xml
-    abort "Input file doesn't seem to be a valid XML file, XML declaration missing" unless IO.read(infile, 6) == '<?xml '
-  when :sql
-    mysql_user = ask('Please enter the MySQL user name: ')              { |q| q.default = ENV['USER'] }
-    mysql_pass = ask("Please enter the MySQL password for that user: ") { |q| q.echo    = false       }
+case type
+  when :mysql
+    case options[:intype]
+      when :xml
+        abort "Input file doesn't seem to be a valid XML file, XML declaration missing" unless IO.read(infile, 6) == '<?xml '
+      when :sql
+        require 'mysql'
 
-    # according to <http://www.adamspiers.org/computing/mysqldiff/#how> MySQL
-    # default permissions allow anyone to create databases beginning with the
-    # prefix 'test_'
-    temp_db   = 'flattendb_temp_%d_%d' % [Time.now, $$]
-    temp_user = 'flattendb_user'
-    temp_pass = 'flattendb_pass'
+        mysql_user = ask('Please enter the MySQL user name: ')              { |q| q.default = ENV['USER'] }
+        mysql_pass = ask("Please enter the MySQL password for that user: ") { |q| q.echo    = false       }
 
-    dump_file = infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
-    abort "Dump file and output file are the same: #{dump_file} = #{outfile}" if File.expand_path(dump_file) == File.expand_path(outfile)
+        # according to <http://www.adamspiers.org/computing/mysqldiff/#how> MySQL
+        # default permissions allow anyone to create databases beginning with the
+        # prefix 'test_'
+        temp_db   = 'flattendb_temp_%d_%d' % [Time.now, $$]
+        temp_user = 'flattendb_user'
+        temp_pass = 'flattendb_pass'
 
-    mysql_cmd = "/usr/bin/mysql --one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{infile}"
-    dump_cmd  = "/usr/bin/mysqldump --xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{dump_file}"
+        dump_file = infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
+        abort "Dump file and output file are the same: #{dump_file} = #{outfile}" if File.expand_path(dump_file) == File.expand_path(outfile)
 
-    begin
-      mysql = Mysql.real_connect('localhost', mysql_user, mysql_pass)
+        mysql_cmd = "/usr/bin/mysql --one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{infile}"
+        dump_cmd  = "/usr/bin/mysqldump --xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{dump_file}"
 
-      mysql.query("CREATE DATABASE #{temp_db}")
-      mysql.query("GRANT ALL ON #{temp_db}.* TO '#{temp_user}'@'localhost' IDENTIFIED BY '#{temp_pass}'")
+        begin
+          mysql = Mysql.real_connect('localhost', mysql_user, mysql_pass)
 
-      system("#{mysql_cmd} && #{dump_cmd}")
-    rescue Mysql::Error => err
-      abort "ERROR #{err.errno} (#{err.sqlstate}): #{err.error}"
-    ensure
-      if mysql
-        mysql.query("REVOKE ALL ON #{temp_db}.* FROM '#{temp_user}'@'localhost'") if mysql_user == 'root'
-        mysql.query("DROP DATABASE IF EXISTS #{temp_db}")
-        mysql.close
-      end
+          mysql.query("CREATE DATABASE #{temp_db}")
+          mysql.query("GRANT ALL ON #{temp_db}.* TO '#{temp_user}'@'localhost' IDENTIFIED BY '#{temp_pass}'")
+
+          system("#{mysql_cmd} && #{dump_cmd}")
+        rescue Mysql::Error => err
+          abort "ERROR #{err.errno} (#{err.sqlstate}): #{err.error}"
+        ensure
+          if mysql
+            mysql.query("REVOKE ALL ON #{temp_db}.* FROM '#{temp_user}'@'localhost'") if mysql_user == 'root'
+            mysql.query("DROP DATABASE IF EXISTS #{temp_db}")
+            mysql.close
+          end
+        end
+
+        infile = dump_file
     end
-
-    infile = dump_file
 end
 
-FlattenDB::MySQL.new(infile, outfile, configfile).flatten!.to_xml
+FlattenDB[type].new(infile, outfile, configfile).flatten!.to_xml
 
 File.delete(dump_file) if dump_file && !options[:keep]
