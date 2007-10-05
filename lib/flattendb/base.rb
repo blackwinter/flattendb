@@ -57,8 +57,8 @@ module FlattenDB
 
       private
 
-      def register_type(type)
-        types[type] = self
+      def register_type(type, klass = self)
+        types[type] = klass
       end
 
       def register_types(*types)
@@ -70,7 +70,7 @@ module FlattenDB
       protected
 
       def inherited(klass)
-        register_type klass.name.split('::').last.downcase.to_sym
+        register_type klass.name.split('::').last.downcase.to_sym, klass
       end
 
     end

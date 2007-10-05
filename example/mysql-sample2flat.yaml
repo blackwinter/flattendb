@@ -3,8 +3,8 @@ object:
   attr2: ObjID
   fooobject:
     @key: ObjID
-    attr1: FooID
-    attr3: FooID
+    attr1: attr1ID
+    attr3: attr3ID
   barobject:
     @key: ObjID
-    attr4: BarID
+    attr4: attr4ID

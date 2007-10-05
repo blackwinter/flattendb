@@ -40,7 +40,7 @@ require 'flattendb'
 USAGE = "Usage: #{$0} [-h|--help] [options] <infile> <outfile> <configfile>"
 
 options = {
-  :type => 'mysql',
+  :type => :mysql,
   :mysql => {
     :intype => :xml,
     :keep   => false
@@ -82,7 +82,7 @@ OptionParser.new { |opts|
 }.parse!
 
 type    = options[:type]
-options = options[type.to_sym]
+options = options[type] || {}
 
 # Load corresponding module
 begin
@@ -118,8 +118,8 @@ case type
         dump_file = infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
         abort "Dump file and output file are the same: #{dump_file} = #{outfile}" if File.expand_path(dump_file) == File.expand_path(outfile)
 
-        mysql_cmd = "/usr/bin/mysql --one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{infile}"
-        dump_cmd  = "/usr/bin/mysqldump --xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{dump_file}"
+        mysql_cmd = "mysql --one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{infile}"
+        dump_cmd  = "mysqldump --xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{dump_file}"
 
         begin
           mysql = Mysql.real_connect('localhost', mysql_user, mysql_pass)

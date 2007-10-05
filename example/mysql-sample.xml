@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="ndr">
+        <table_structure name="object">
+                <field Field="ObjID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Bla" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Blub" Type="varchar(50)" Null="YES" Key="" Extra="" />
+                <options Name="object" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="object">
+        <row>
+                <field name="ObjID">1</field>
+                <field name="Bla">12</field>
+                <field name="Blub"></field>
+        </row>
+        <row>
+                <field name="ObjID">2</field>
+                <field name="Bla">12</field>
+                <field name="Blub">hi</field>
+        </row>
+        <row>
+                <field name="ObjID">3</field>
+                <field name="Bla">1</field>
+                <field name="Blub">ho</field>
+        </row>
+        </table_data>
+        <table_structure name="fooobject">
+                <field Field="ObjID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="attr1ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="attr3ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Foo" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="fooobject" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="fooobject">
+        <row>
+                <field name="ObjID">1</field>
+                <field name="attr1ID">1</field>
+                <field name="attr3ID">2</field>
+                <field name="Foo">112</field>
+        </row>
+        <row>
+                <field name="ObjID">2</field>
+                <field name="attr1ID">2</field>
+                <field name="attr3ID">1</field>
+                <field name="Foo">122</field>
+        </row>
+        <row>
+                <field name="ObjID">3</field>
+                <field name="attr1ID">3</field>
+                <field name="attr3ID">3</field>
+                <field name="Foo">111</field>
+        </row>
+        </table_data>
+        <table_structure name="barobject">
+                <field Field="ObjID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="attr4ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Bar" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="barobject" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="barobject">
+        <row>
+                <field name="ObjID">1</field>
+                <field name="attr4ID">2</field>
+                <field name="Bar">1002</field>
+        </row>
+        <row>
+                <field name="ObjID">2</field>
+                <field name="attr4ID">1</field>
+                <field name="Bar">1200</field>
+        </row>
+        <row>
+                <field name="ObjID">3</field>
+                <field name="attr4ID">3</field>
+                <field name="Bar">1000</field>
+        </row>
+        </table_data>
+        <table_structure name="attr1">
+                <field Field="ObjID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="attr1ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Val" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="attr1" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="attr1">
+        <row>
+                <field name="ObjID">1</field>
+                <field name="attr1ID">1</field>
+                <field name="Val">3</field>
+        </row>
+        <row>
+                <field name="ObjID">2</field>
+                <field name="attr1ID">2</field>
+                <field name="Val">2</field>
+        </row>
+        <row>
+                <field name="ObjID">3</field>
+                <field name="attr1ID">3</field>
+                <field name="Val">1</field>
+        </row>
+        </table_data>
+        <table_structure name="attr2">
+                <field Field="ObjID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="attr2ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Val" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="attr2" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="attr2">
+        <row>
+                <field name="ObjID">1</field>
+                <field name="attr2ID">3</field>
+                <field name="Val">4</field>
+        </row>
+        <row>
+                <field name="ObjID">2</field>
+                <field name="attr2ID">2</field>
+                <field name="Val">5</field>
+        </row>
+        <row>
+                <field name="ObjID">3</field>
+                <field name="attr2ID">1</field>
+                <field name="Val">6</field>
+        </row>
+        </table_data>
+        <table_structure name="attr3">
+                <field Field="attr3ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Val" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="attr3" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="attr3">
+        <row>
+                <field name="attr3ID">1</field>
+                <field name="Val">0</field>
+        </row>
+        <row>
+                <field name="attr3ID">2</field>
+                <field name="Val">8</field>
+        </row>
+        <row>
+                <field name="attr3ID">3</field>
+                <field name="Val">7</field>
+        </row>
+        </table_data>
+        <table_structure name="attr4">
+                <field Field="attr4ID" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <field Field="Val" Type="int(11)" Null="NO" Key="" Default="" Extra="" />
+                <options Name="attr4" Engine="MyISAM" Version="10" Row_format="Fixed" Collation="utf8_general_ci" Create_options="" Comment="" />
+        </table_structure>
+        <table_data name="attr4">
+        <row>
+                <field name="attr4ID">1</field>
+                <field name="Val">0</field>
+        </row>
+        <row>
+                <field name="attr4ID">2</field>
+                <field name="Val">0</field>
+        </row>
+        <row>
+                <field name="attr4ID">3</field>
+                <field name="Val">9</field>
+        </row>
+        </table_data>
+</database>
+</mysqldump>
