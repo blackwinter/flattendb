@@ -1,0 +1,97 @@
+#! /usr/bin/ruby
+
+# vi:ft=ruby
+
+#--
+###############################################################################
+#                                                                             #
+# flattendb -- Flatten relational databases                                   #
+#                                                                             #
+# Copyright (C) 2007 University of Cologne,                                   #
+#                    Albertus-Magnus-Platz,                                   #
+#                    50932 Cologne, Germany                                   #
+#                                                                             #
+# Authors:                                                                    #
+#     Jens Wille <jens.wille@uni-koeln.de>                                    #
+#                                                                             #
+# flattendb is free software; you can redistribute it and/or modify it under  #
+# the terms of the GNU General Public License as published by the Free        #
+# Software Foundation; either version 3 of the License, or (at your option)   #
+# any later version.                                                          #
+#                                                                             #
+# flattendb is distributed in the hope that it will be useful, but WITHOUT    #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       #
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for    #
+# more details.                                                               #
+#                                                                             #
+# You should have received a copy of the GNU General Public License along     #
+# with flattendb. If not, see <http://www.gnu.org/licenses/>.                 #
+#                                                                             #
+###############################################################################
+#++
+
+if $0 == __FILE__
+  $type = :mysql
+  load File.join(File.dirname(__FILE__), 'flattendb')
+else
+  case $options[:intype]
+    when :xml
+      abort "Input file doesn't seem to be a valid XML file, XML declaration missing" \
+        unless IO.read($infile, 6) == '<?xml '
+    when :sql
+      require 'mysql'
+
+      mysql_cmd = 'mysql'
+      dump_cmd  = 'mysqldump'
+
+      [mysql_cmd, dump_cmd].each { |cmd|
+        catch :cmd_found do
+          ENV['PATH'].split(':').each { |path|
+            throw :cmd_found if File.executable?(File.join(path, cmd))
+          }
+
+          abort "Command not found: #{cmd}"
+        end
+      }
+
+      mysql_user = ask('Please enter the MySQL user name: ')              \
+        { |q| q.default = ENV['USER'] }
+      mysql_pass = ask("Please enter the MySQL password for that user: ") \
+        { |q| q.echo    = false       }
+
+      # according to <http://www.adamspiers.org/computing/mysqldiff/#how> MySQL
+      # default permissions allow anyone to create databases beginning with the
+      # prefix 'test_'
+      temp_db   = 'flattendb_temp_%d_%d' % [Time.now, $$]
+      temp_user = 'flattendb_user'
+      temp_pass = 'flattendb_pass'
+
+      $dump_file = $infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
+      abort "Dump file and output file are the same: #{$dump_file} = #{$outfile}" \
+        if File.expand_path($dump_file) == File.expand_path($outfile)
+
+      mysql_args = "--one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{$infile}"
+      dump_args  = "--xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{$dump_file}"
+
+      begin
+        mysql = Mysql.real_connect('localhost', mysql_user, mysql_pass)
+
+        mysql.query("CREATE DATABASE #{temp_db}")
+        mysql.query("GRANT ALL ON #{temp_db}.* TO '#{temp_user}'@'localhost' IDENTIFIED BY '#{temp_pass}'")
+
+        system("#{mysql_cmd} #{mysql_args} && #{dump_cmd} #{dump_args}")
+      rescue Mysql::Error => err
+        abort "ERROR #{err.errno} (#{err.sqlstate}): #{err.error}"
+      ensure
+        if mysql
+          mysql.query("REVOKE ALL ON #{temp_db}.* FROM '#{temp_user}'@'localhost'") \
+            if mysql_user == 'root'
+
+          mysql.query("DROP DATABASE IF EXISTS #{temp_db}")
+          mysql.close
+        end
+      end
+
+      $infile = $dump_file
+  end
+end
