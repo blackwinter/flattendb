@@ -47,13 +47,17 @@ $options = {
   }
 }
 
-def type_options(type, opts, heading = true)
+def type_options(type, opts, with_heading = true)
+  heading = lambda { |name|
+    if with_heading
+      opts.separator ''
+      opts.separator "- #{name}"
+    end
+  }
+
   case type.to_sym
     when :mysql
-      if heading
-        opts.separator ''
-        opts.separator '- MySQL'
-      end
+      heading['MySQL']
 
       opts.on('-x', '--xml', "Input file is of type XML [This is the default]") {
         $options[:mysql][:intype] = :xml
@@ -73,7 +77,7 @@ OptionParser.new { |opts|
 
   opts.separator 'Options:'
   if $type
-    opts.separator '   [-t, --type]                      TYPE OVERRIDE IN EFFECT'
+    opts.separator "   [-t, --type]                      TYPE OVERRIDE IN EFFECT (#{$type})"
   else
     opts.on('-t', '--type TYPE', "Type of database at hand [Default: #{$options[:type]}]") { |t|
       $options[:type] = t.downcase.to_sym
