@@ -58,7 +58,7 @@ module FlattenDB
       protected
 
       def inherited(klass)
-        types[klass.name.split('::').last.downcase.to_sym] = klass
+        types[klass.name.split('::')[1..-1].join('/').downcase.to_sym] = klass
       end
 
     end
