@@ -1,3 +1,6 @@
+# Utilizes global rake-tasks: alias rake="rake -r rake -R /path/to/rakelibdir"
+# (Base tasks at <http://prometheus.khi.uni-koeln.de/svn/scratch/rake-tasks/>)
+
 require 'lib/flattendb/version'
 
 FILES = FileList['lib/**/*.rb'].to_a
@@ -19,5 +22,5 @@ task(:gem_spec) {{
   :bindir           => 'bin',
   :executables      => EXECS,
   :extra_rdoc_files => RDOCS,
-  :dependencies     => %w[highline mysql libxml-ruby builder]
+  :dependencies     => %w[highline libxml-ruby builder ruby-nuggets]
 }}
