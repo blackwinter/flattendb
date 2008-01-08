@@ -26,30 +26,28 @@
 ###############################################################################
 #++
 
+require 'xml/libxml'
+
+require 'flattendb/base'
+
 module FlattenDB
 
-  module Version
+  class MDB < Base
 
-    MAJOR = 0
-    MINOR = 0
-    TINY  = 2
+    JOIN_KEY = '@key'
 
-    class << self
+    def initialize(infiles, outfile, config)
+      super
+    end
 
-      # Returns array representation.
-      def to_a
-        [MAJOR, MINOR, TINY]
-      end
+    def flatten!(options = {}, builder_options = {})
+      self
+    end
 
-      # Short-cut for version string.
-      def to_s
-        to_a.join('.')
-      end
-
+    def to_xml(output = output, builder_options = {})
+      self
     end
 
   end
-
-  VERSION = Version.to_s
 
 end

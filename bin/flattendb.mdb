@@ -1,7 +1,11 @@
+#! /usr/bin/ruby
+
+# vi:ft=ruby
+
 #--
 ###############################################################################
 #                                                                             #
-# A component of flattendb, the relational database flattener.                #
+# flattendb -- Flatten relational databases                                   #
 #                                                                             #
 # Copyright (C) 2007 University of Cologne,                                   #
 #                    Albertus-Magnus-Platz,                                   #
@@ -26,30 +30,25 @@
 ###############################################################################
 #++
 
-module FlattenDB
+if $0 == __FILE__
+  $type = :mdb
+  load File.join(File.dirname(__FILE__), 'flattendb')
+else
+  case $options[:intype]
+    when :xml
+      $infiles.each { |infile|
+        abort "Input file doesn't seem to be a valid XML file, XML declaration missing: #{infile}" \
+          unless IO.read(infile, 6) == '<?xml '
+      }
+    when :mdb
+      tables_cmd = 'mdb-tables'
+      export_cmd = 'mdb-export'
 
-  module Version
+      require_commands(tables_cmd, export_cmd, :pkg => 'mdbtools')
+      require_libraries('fastercsv')
 
-    MAJOR = 0
-    MINOR = 0
-    TINY  = 2
-
-    class << self
-
-      # Returns array representation.
-      def to_a
-        [MAJOR, MINOR, TINY]
-      end
-
-      # Short-cut for version string.
-      def to_s
-        to_a.join('.')
-      end
-
-    end
-
+      $infiles.map! { |infile|
+        $dump_file
+      }
   end
-
-  VERSION = Version.to_s
-
 end

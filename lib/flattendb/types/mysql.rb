@@ -26,7 +26,6 @@
 ###############################################################################
 #++
 
-require 'yaml'
 require 'xml/libxml'
 
 require 'flattendb/base'
@@ -37,41 +36,12 @@ module FlattenDB
 
     JOIN_KEY = '@key'
 
-    attr_reader :root, :config, :output, :document, :database, :name, :tables, :builder
+    attr_reader :document, :database, :name, :tables, :builder
 
     def initialize(infile, outfile, config)
-      config = case config
-        when Hash
-          config
-        when String
-          # assume file name
-          YAML.load_file(config)
-        else
-          raise ArgumentError, "invalid config argument of type '#{config.class}'"
-      end
-      raise ArgumentError, "can't have more than one primary (root) table" if config.size > 1
+      super
 
-      (@root, @config), _ = *config  # get "first" (and only) hash element
-
-      @output = case outfile
-        when IO
-          outfile
-        when String
-          # assume file name
-          File.open(outfile, 'w')
-        else
-          raise ArgumentError, "invalid outfile argument of type '#{outfile.class}'"
-      end
-
-      @document = XML::Document.file(case infile
-        when String
-          infile
-        when File
-          infile.path
-        else
-          raise ArgumentError, "invalid infile argument of type '#{infile.class}'"
-      end)
-
+      @document = XML::Document.file(@input.first)
       @database = @document.root.find_first('database[@name]')
       @name     = @database[:name]
       @tables   = {}

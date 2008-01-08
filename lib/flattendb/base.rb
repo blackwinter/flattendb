@@ -26,6 +26,8 @@
 ###############################################################################
 #++
 
+require 'yaml'
+
 require 'rubygems'
 require 'builder'
 
@@ -61,6 +63,44 @@ module FlattenDB
         types[klass.name.split('::')[1..-1].join('/').downcase.to_sym] = klass
       end
 
+    end
+
+    attr_reader :root, :config, :input, :output
+
+    def initialize(infiles, outfile, config)
+      config = case config
+        when Hash
+          config
+        when String
+          # assume file name
+          YAML.load_file(config)
+        else
+          raise ArgumentError, "invalid config argument of type '#{config.class}'"
+      end
+      raise ArgumentError, "can't have more than one primary (root) table" if config.size > 1
+
+      (@root, @config), _ = *config  # get "first" (and only) hash element
+
+      @input = [*infiles].map { |infile|
+        case infile
+          when String
+            infile
+          when File
+            infile.path
+          else
+            raise ArgumentError, "invalid infile argument of type '#{infile.class}'"
+        end
+      }
+
+      @output = case outfile
+        when IO
+          outfile
+        when String
+          # assume file name
+          File.open(outfile, 'w')
+        else
+          raise ArgumentError, "invalid outfile argument of type '#{outfile.class}'"
+      end
     end
 
     def flatten!(*args)

@@ -34,25 +34,18 @@ if $0 == __FILE__
   $type = :mysql
   load File.join(File.dirname(__FILE__), 'flattendb')
 else
+  $infile = $infiles.first
+
   case $options[:intype]
     when :xml
       abort "Input file doesn't seem to be a valid XML file, XML declaration missing" \
         unless IO.read($infile, 6) == '<?xml '
     when :sql
-      require 'mysql'
-
       mysql_cmd = 'mysql'
       dump_cmd  = 'mysqldump'
 
-      [mysql_cmd, dump_cmd].each { |cmd|
-        catch :cmd_found do
-          ENV['PATH'].split(':').each { |path|
-            throw :cmd_found if File.executable?(File.join(path, cmd))
-          }
-
-          abort "Command not found: #{cmd}"
-        end
-      }
+      require_commands(mysql_cmd, dump_cmd, :pkg => 'a suitable MySQL client')
+      require_libraries('mysql')
 
       mysql_user = ask('Please enter the MySQL user name: ')              \
         { |q| q.default = ENV['USER'] }

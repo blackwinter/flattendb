@@ -28,28 +28,52 @@
 
 module FlattenDB
 
-  module Version
+  module CLI
 
-    MAJOR = 0
-    MINOR = 0
-    TINY  = 2
+    def require_libraries(*libraries)
+      parse_arguments(libraries, :gem).each { |lib, gem|
+        begin
+          require lib
+        rescue LoadError
+          abort_with_msg('Ruby library not found: %s', lib, 'Please install gem %s first', gem)
+        end
+      }
+    end
 
-    class << self
+    def require_commands(*commands)
+      parse_arguments(commands, :pkg).each { |cmd, pkg|
+        catch :cmd_found do
+          ENV['PATH'].split(':').each { |path|
+            throw :cmd_found if File.executable?(File.join(path, cmd))
+          }
 
-      # Returns array representation.
-      def to_a
-        [MAJOR, MINOR, TINY]
-      end
+          abort_with_msg("Command not found: #{cmd}", "Please install #{pkg} first", pkg || cmd)
+        end
+      }
+    end
 
-      # Short-cut for version string.
-      def to_s
-        to_a.join('.')
-      end
+    def abort_with_msg(msg1, arg1, msg2, arg2)
+      msg  = msg1 % arg1
+      msg += " (#{msg2})" % (arg2 || arg1)
 
+      abort msg
+    end
+
+    private
+
+    def parse_arguments(arguments, option)
+      options = arguments.last.is_a?(Hash) ? arguments.pop : {}
+      special = options.delete(option)
+
+      arguments.map { |arg|
+        [arg, special]
+      } + options.map { |args, spx|
+        [*args].map { |arg|
+          [arg, spx]
+        }
+      }.flatten_once
     end
 
   end
-
-  VERSION = Version.to_s
 
 end
