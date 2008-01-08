@@ -14,7 +14,7 @@ Hen.lay! {{
   :gem => {
     :version      => FlattenDB::VERSION,
     :summary      => 'Flatten relational databases.',
-    :files        => FileList['lib/**/*.rb'].to_a,
+    :files        => FileList['lib/**/*.rb', 'bin/*'].to_a,
     :extra_files  => FileList['[A-Z]*', 'example/*'].to_a,
     :dependencies => %w[highline libxml-ruby builder ruby-nuggets]
   }
