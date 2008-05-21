@@ -116,8 +116,8 @@ OptionParser.new { |opts|
 
   opts.separator ''
 
-  opts.on('-i', '--input-files FILES...', "Input file(s); depending on the database type, multiple files may be given [REQUIRED]") { |f|
-    $global_options[:infiles] = f
+  opts.on('-i', '--input-file FILE', "Input file; depending on the database type, this option", "may be given multiple times [REQUIRED]") { |f|
+    $global_options[:infiles] << f
   }
 
   opts.on('-o', '--output-file FILE', "Output file (flat XML) [REQUIRED]") { |f|

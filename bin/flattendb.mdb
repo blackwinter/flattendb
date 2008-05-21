@@ -37,8 +37,9 @@ else
   case $options[:intype]
     when :xml
       $infiles.each { |infile|
-        abort "Input file doesn't seem to be a valid XML file, XML declaration missing: #{infile}" \
-          unless IO.read(infile, 6) == '<?xml '
+        unless IO.read(infile, 6) == '<?xml '
+          abort "Input file doesn't seem to be a valid XML file, XML declaration missing: #{infile}"
+        end
       }
     when :mdb
       tables_cmd = 'mdb-tables'
