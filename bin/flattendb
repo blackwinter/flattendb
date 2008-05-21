@@ -166,8 +166,12 @@ rescue LoadError
 end
 
 abort "No output file specified" unless $global_options[:outfile]
-abort "No configuration file specified" unless $global_options[:confile]
-abort "Configuration file not found: #{confile}" unless File.readable?(confile)
+
+if confile = $global_options[:confile]
+  abort "Configuration file not found: #{confile}" unless File.readable?(confile)
+else
+  abort "No configuration file specified"
+end
 
 $global_options[:infiles].each { |infile|
   abort "Input file not found: #{infile}" unless File.readable?(infile)

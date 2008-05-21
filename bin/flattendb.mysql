@@ -30,7 +30,7 @@
 ###############################################################################
 #++
 
-if $0 == __FILE__
+unless $type
   $type = :mysql
   load File.join(File.dirname(__FILE__), 'flattendb')
 else
@@ -38,8 +38,9 @@ else
 
   case $options[:intype]
     when :xml
-      abort "Input file doesn't seem to be a valid XML file, XML declaration missing" \
-        unless IO.read($infile, 6) == '<?xml '
+      unless IO.read($infile, 6) == '<?xml '
+        abort "Input file doesn't seem to be a valid XML file, XML declaration missing"
+      end
     when :sql
       mysql_cmd = 'mysql'
       dump_cmd  = 'mysqldump'
