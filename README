@@ -12,9 +12,11 @@ TODO: well, the description... ;-)
 
 == LINKS
 
-* <http://prometheus.rubyforge.org/flattendb>
-* <http://prometheus.rubyforge.org/svn/scratch/flattendb>
-* <http://github.com/blackwinter/flattendb>
+<b></b>
+Documentation::     <http://prometheus.rubyforge.org/flattendb>
+Source code (old):: <http://prometheus.rubyforge.org/svn/scratch/flattendb>
+Source code::       <http://github.com/blackwinter/flattendb>
+Rubyforge project:: <http://rubyforge.org/projects/prometheus>
 
 
 == AUTHORS
