@@ -41,7 +41,7 @@ module FlattenDB
     def initialize(infile, outfile, config)
       super
 
-      @document = XML::Document.file(@input.first)
+      @document = LibXML::XML::Document.file(@input.first)
       @database = @document.root.find_first('database[@name]')
       @name     = @database[:name]
       @tables   = {}

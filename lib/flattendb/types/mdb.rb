@@ -26,8 +26,6 @@
 ###############################################################################
 #++
 
-require 'libxml'
-
 require 'flattendb/base'
 
 module FlattenDB
