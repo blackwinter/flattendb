@@ -26,7 +26,7 @@
 ###############################################################################
 #++
 
-require 'xml/libxml'
+require 'libxml'
 
 require 'flattendb/base'
 
@@ -102,15 +102,18 @@ module FlattenDB
           when Array
             inject_foreign(tables, primary_table, foreign_table, *spec)
           when Hash
-            raise "invalid join table spec, '#{JOIN_KEY}' missing" unless spec.has_key?(JOIN_KEY)
+            raise ArgumentError, "invalid join table spec, '#{JOIN_KEY}' missing" unless spec.has_key?(JOIN_KEY)
 
-            local_key, foreign_key = spec.delete(JOIN_KEY)
-            foreign_key ||= local_key
+            join_key_spec = spec.delete(JOIN_KEY)
 
             joined_tables = tables.dup
             flatten_tables!(joined_tables, foreign_table, spec)
 
-            inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key, joined_tables)
+            (join_key_spec.is_a?(Hash) ? join_key_spec : { foreign_table => join_key_spec }).each { |foreign_table_name, join_key|
+              local_key, foreign_key = join_key
+
+              inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key || local_key, joined_tables, foreign_table_name)
+            }
           else
             raise ArgumentError, "don't know how to handle spec of type '#{spec.class}'"
         end
@@ -121,15 +124,19 @@ module FlattenDB
       }
     end
 
-    def inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables)
+    def inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table)
+      raise ArgumentError, "no such foreign table: #{foreign_table}" unless foreign_tables.has_key?(foreign_table)
+
+      foreign_rows = foreign_tables[foreign_table]
+
       tables[primary_table].each { |row|
-        next unless row.has_key?(local_key)
+        if row.has_key?(local_key)
+          foreign_content = foreign_rows.select { |foreign_row|
+            row[local_key] == foreign_row[foreign_key]
+          }
 
-        foreign_content = foreign_tables[foreign_table].find_all { |foreign_row|
-          row[local_key] == foreign_row[foreign_key]
-        }
-
-        row[foreign_table] = foreign_content unless foreign_content.empty?
+          row[foreign_table_name] = foreign_content unless foreign_content.empty?
+        end
       }
     end
 

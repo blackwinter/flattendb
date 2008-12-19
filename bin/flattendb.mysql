@@ -42,6 +42,10 @@ else
         abort "Input file doesn't seem to be a valid XML file, XML declaration missing"
       end
     when :sql
+      $dump_file = $infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
+      abort "Dump file and output file are the same: #{$dump_file} = #{$outfile}" \
+        if File.expand_path($dump_file) == File.expand_path($outfile)
+
       mysql_cmd = 'mysql'
       dump_cmd  = 'mysqldump'
 
@@ -59,10 +63,6 @@ else
       temp_db   = 'flattendb_temp_%d_%d' % [Time.now, $$]
       temp_user = 'flattendb_user'
       temp_pass = 'flattendb_pass'
-
-      $dump_file = $infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
-      abort "Dump file and output file are the same: #{$dump_file} = #{$outfile}" \
-        if File.expand_path($dump_file) == File.expand_path($outfile)
 
       mysql_args = "--one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{$infile}"
       dump_args  = "--xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{$dump_file}"

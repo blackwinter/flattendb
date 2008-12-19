@@ -8,3 +8,11 @@ object:
   barobject:
     @key: ObjID
     attr4: attr4ID
+
+#primary_table:
+#  foreign_table1: foreign_key1  # local_key1 = foreign_key1
+#  foreign_table2: [local_key2, foreign_key2]
+#  foreign_table3:
+#    @key: foreign_key3          # local_key3 = foreign_key3
+#  foreign_table4:
+#    @key: [local_key4, foreign_key4]

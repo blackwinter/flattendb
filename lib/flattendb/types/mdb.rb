@@ -26,7 +26,7 @@
 ###############################################################################
 #++
 
-require 'xml/libxml'
+require 'libxml'
 
 require 'flattendb/base'
 
