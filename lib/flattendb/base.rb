@@ -106,7 +106,7 @@ module FlattenDB
     def flatten!(*args)
       raise NotImplementedError, 'must be defined by sub-class'
     end
-    
+
     def to_xml(*args)
       raise NotImplementedError, 'must be defined by sub-class'
     end

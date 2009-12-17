@@ -8,7 +8,8 @@ require 'lib/flattendb/version'
 
 Hen.lay! {{
   :rubyforge => {
-    :package => 'flattendb'
+    :project => %q{prometheus},
+    :package => %q{flattendb}
   },
 
   :gem => {
