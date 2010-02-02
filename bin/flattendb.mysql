@@ -55,12 +55,13 @@ else
       mysql_pass = ask('Please enter the MySQL password for that user: ') \
         { |q| q.echo    = false       }
 
-      # according to <http://www.adamspiers.org/computing/mysqldiff/#how> MySQL
-      # default permissions allow anyone to create databases beginning with the
-      # prefix 'test_'
-      temp_db   = 'flattendb_temp_%d_%d' % [Time.now, $$]
-      temp_user = 'flattendb_user'
-      temp_pass = 'flattendb_pass'
+      is_root = mysql_user == 'root'
+
+      temp_db   = ENV['FLATTEN_DB']   || 'flattendb_temp'
+      temp_db << '_%d_%d' % [Time.now, $$] if is_root
+
+      temp_user = ENV['FLATTEN_USER'] || 'flattendb_user'
+      temp_pass = ENV['FLATTEN_PASS'] || 'flattendb_pass'
 
       input = $infile =~ /\.gz\z/i ? "<(zcat #{$infile})" : "< #{$infile}"
       mysql_args = "--one-database -u#{temp_user} -p#{temp_pass} #{temp_db} #{input}"
@@ -70,17 +71,16 @@ else
         mysql = Mysql.real_connect('localhost', mysql_user, mysql_pass)
 
         mysql.query("CREATE DATABASE #{temp_db}")
-        mysql.query("GRANT ALL ON #{temp_db}.* TO '#{temp_user}'@'localhost' IDENTIFIED BY '#{temp_pass}'")
+        mysql.query("GRANT ALL ON #{temp_db}.* TO '#{temp_user}'@'localhost' IDENTIFIED BY '#{temp_pass}'") if is_root
 
         system("#{mysql_cmd} #{mysql_args} && #{dump_cmd} #{dump_args}")
       rescue Mysql::Error => err
         abort "ERROR #{err.errno} (#{err.sqlstate}): #{err.error}"
       ensure
         if mysql
-          mysql.query("REVOKE ALL ON #{temp_db}.* FROM '#{temp_user}'@'localhost'") \
-            if mysql_user == 'root'
-
+          mysql.query("REVOKE ALL ON #{temp_db}.* FROM '#{temp_user}'@'localhost'") if is_root
           mysql.query("DROP DATABASE IF EXISTS #{temp_db}")
+
           mysql.close
         end
       end
