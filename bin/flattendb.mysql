@@ -40,7 +40,7 @@ else
         abort "Input file doesn't seem to be a valid XML file, XML declaration missing"
       end
     when :sql
-      $dump_file = $infile.sub(/\.(?:sql|dump)$/i, '') << '.xml'
+      $dump_file = $infile.sub(/\.(?:sql|dump)(?:\.gz)?\z/i, '') << '.xml'
       abort "Dump file and output file are the same: #{$dump_file} = #{$outfile}" \
         if File.expand_path($dump_file) == File.expand_path($outfile)
 
@@ -52,7 +52,7 @@ else
 
       mysql_user = ask('Please enter the MySQL user name: ')              \
         { |q| q.default = ENV['USER'] }
-      mysql_pass = ask("Please enter the MySQL password for that user: ") \
+      mysql_pass = ask('Please enter the MySQL password for that user: ') \
         { |q| q.echo    = false       }
 
       # according to <http://www.adamspiers.org/computing/mysqldiff/#how> MySQL
@@ -62,7 +62,8 @@ else
       temp_user = 'flattendb_user'
       temp_pass = 'flattendb_pass'
 
-      mysql_args = "--one-database -u#{temp_user} -p#{temp_pass} #{temp_db} < #{$infile}"
+      input = $infile =~ /\.gz\z/i ? "<(zcat #{$infile})" : "< #{$infile}"
+      mysql_args = "--one-database -u#{temp_user} -p#{temp_pass} #{temp_db} #{input}"
       dump_args  = "--xml -u#{temp_user} -p#{temp_pass} #{temp_db} > #{$dump_file}"
 
       begin
