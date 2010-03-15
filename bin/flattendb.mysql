@@ -58,7 +58,7 @@ else
       is_root = mysql_user == 'root'
 
       temp_db   = ENV['FLATTEN_DB']   || 'flattendb_temp'
-      temp_db << '_%d_%d' % [Time.now, $$] if is_root
+      temp_db   = "#{temp_db}_%d_%d" % [Time.now, $$] if is_root
 
       temp_user = ENV['FLATTEN_USER'] || 'flattendb_user'
       temp_pass = ENV['FLATTEN_PASS'] || 'flattendb_pass'
