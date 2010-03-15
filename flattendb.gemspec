@@ -2,21 +2,21 @@
 
 Gem::Specification.new do |s|
   s.name = %q{flattendb}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jens Wille"]
-  s.date = %q{2010-02-02}
+  s.date = %q{2010-03-15}
   s.description = %q{Flatten relational databases.}
   s.email = %q{jens.wille@uni-koeln.de}
-  s.executables = ["flattendb.mysql", "flattendb", "flattendb.mdb"]
+  s.executables = ["flattendb", "flattendb.mdb", "flattendb.mysql"]
   s.extra_rdoc_files = ["COPYING", "ChangeLog", "README"]
-  s.files = ["lib/flattendb/types/mdb.rb", "lib/flattendb/types/mysql.rb", "lib/flattendb/cli.rb", "lib/flattendb/version.rb", "lib/flattendb/base.rb", "lib/flattendb.rb", "bin/flattendb.mysql", "bin/flattendb", "bin/flattendb.mdb", "Rakefile", "COPYING", "ChangeLog", "README", "example/mysql-sample.xml", "example/mysql-sample2flat.yaml", "example/mysql-sample.flat.xml", "example/mysql-sample.sql"]
+  s.files = ["lib/flattendb.rb", "lib/flattendb/cli.rb", "lib/flattendb/version.rb", "lib/flattendb/base.rb", "lib/flattendb/types/mysql.rb", "lib/flattendb/types/mdb.rb", "bin/flattendb", "bin/flattendb.mdb", "bin/flattendb.mysql", "README", "ChangeLog", "Rakefile", "COPYING", "example/mysql-sample.flat.xml", "example/mysql-sample2flat.yaml", "example/mysql-sample.xml", "example/mysql-sample.sql"]
   s.homepage = %q{http://prometheus.rubyforge.org/flattendb}
   s.rdoc_options = ["--charset", "UTF-8", "--title", "flattendb Application documentation", "--main", "README", "--line-numbers", "--inline-source", "--all"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{prometheus}
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Flatten relational databases.}
 
   if s.respond_to? :specification_version then
