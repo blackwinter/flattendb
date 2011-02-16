@@ -1,22 +1,22 @@
+require File.expand_path(%q{../lib/flattendb/version}, __FILE__)
+
 begin
   require 'hen'
-rescue LoadError
-  abort "Please install the 'hen' gem first."
+
+  Hen.lay! {{
+    :rubyforge => {
+      :project => %q{prometheus},
+      :package => %q{flattendb}
+    },
+
+    :gem => {
+      :version      => FlattenDB::VERSION,
+      :summary      => %q{Flatten relational databases.},
+      :author       => %q{Jens Wille},
+      :email        => %q{jens.wille@uni-koeln.de},
+      :dependencies => %w[highline libxml-ruby builder ruby-nuggets]
+    }
+  }}
+rescue LoadError => err
+  warn "Please install the `hen' gem. (#{err})"
 end
-
-require 'lib/flattendb/version'
-
-Hen.lay! {{
-  :rubyforge => {
-    :project => %q{prometheus},
-    :package => %q{flattendb}
-  },
-
-  :gem => {
-    :version      => FlattenDB::VERSION,
-    :summary      => 'Flatten relational databases.',
-    :files        => FileList['lib/**/*.rb', 'bin/*'].to_a,
-    :extra_files  => FileList['[A-Z]*', 'example/*'].to_a,
-    :dependencies => %w[highline libxml-ruby builder ruby-nuggets]
-  }
-}}
