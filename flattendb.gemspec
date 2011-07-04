@@ -2,21 +2,21 @@
 
 Gem::Specification.new do |s|
   s.name = %q{flattendb}
-  s.version = "0.0.7"
+  s.version = "0.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jens Wille"]
-  s.date = %q{2011-04-29}
+  s.authors = [%q{Jens Wille}]
+  s.date = %q{2011-07-04}
   s.description = %q{Flatten relational databases.}
   s.email = %q{jens.wille@uni-koeln.de}
-  s.executables = ["flattendb", "flattendb.mdb", "flattendb.mysql"]
-  s.extra_rdoc_files = ["README", "COPYING", "ChangeLog"]
-  s.files = ["lib/flattendb.rb", "lib/flattendb/cli.rb", "lib/flattendb/version.rb", "lib/flattendb/base.rb", "lib/flattendb/types/mysql.rb", "lib/flattendb/types/mdb.rb", "bin/flattendb", "bin/flattendb.mdb", "bin/flattendb.mysql", "README", "ChangeLog", "Rakefile", "COPYING", "example/mysql-sample.flat.xml", "example/mysql-sample2flat.yaml", "example/mysql-sample.xml", "example/mysql-sample.sql"]
+  s.executables = [%q{flattendb}, %q{flattendb.mdb}, %q{flattendb.mysql}]
+  s.extra_rdoc_files = [%q{README}, %q{COPYING}, %q{ChangeLog}]
+  s.files = [%q{lib/flattendb.rb}, %q{lib/flattendb/cli.rb}, %q{lib/flattendb/version.rb}, %q{lib/flattendb/base.rb}, %q{lib/flattendb/types/mysql.rb}, %q{lib/flattendb/types/mdb.rb}, %q{bin/flattendb}, %q{bin/flattendb.mdb}, %q{bin/flattendb.mysql}, %q{README}, %q{ChangeLog}, %q{Rakefile}, %q{COPYING}, %q{example/mysql-sample.flat.xml}, %q{example/mysql-sample2flat.yaml}, %q{example/mysql-sample.xml}, %q{example/mysql-sample.sql}]
   s.homepage = %q{http://prometheus.rubyforge.org/flattendb}
-  s.rdoc_options = ["--line-numbers", "--main", "README", "--charset", "UTF-8", "--all", "--title", "flattendb Application documentation (v0.0.7)"]
-  s.require_paths = ["lib"]
+  s.rdoc_options = [%q{--charset}, %q{UTF-8}, %q{--title}, %q{flattendb Application documentation (v0.0.8)}, %q{--main}, %q{README}, %q{--line-numbers}, %q{--all}]
+  s.require_paths = [%q{lib}]
   s.rubyforge_project = %q{prometheus}
-  s.rubygems_version = %q{1.7.2}
+  s.rubygems_version = %q{1.8.5}
   s.summary = %q{Flatten relational databases.}
 
   if s.respond_to? :specification_version then
