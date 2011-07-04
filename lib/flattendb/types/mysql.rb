@@ -117,7 +117,7 @@ module FlattenDB
           else
             raise ArgumentError, "don't know how to handle spec of type '#{spec.class}'"
         end
-      }
+      } if config
 
       tables.delete_if { |table, _|
         table != primary_table
