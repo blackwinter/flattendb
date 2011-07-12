@@ -27,9 +27,12 @@
 #++
 
 require 'flattendb/version'
-require 'flattendb/base'
 
 module FlattenDB
+
+  autoload :Base,  'flattendb/base'
+  autoload :MDB,   'flattendb/types/mdb'
+  autoload :MySQL, 'flattendb/types/mysql'
 
   extend self
 

@@ -27,8 +27,8 @@
 #++
 
 require 'libxml'
-
-require 'flattendb/base'
+require 'athena'
+require 'flattendb'
 
 module FlattenDB
 
@@ -36,22 +36,21 @@ module FlattenDB
 
     JOIN_KEY = '@key'
 
-    attr_reader :document, :database, :name, :tables, :builder
+    attr_reader :type, :name, :tables, :builder
 
-    def initialize(infile, outfile, config)
+    def initialize(options)
       super
 
-      @document = LibXML::XML::Document.file(@input.first)
-      @database = @document.root.find_first('database[@name]')
-      @name     = @database[:name]
-      @tables   = {}
+      @type = options[:type] || :xml
+      @name, @tables = parse
+    end
 
-      parse
+    def parse(tables = {})
+      [send("parse_#{type}", tables) || 'root', tables]
     end
 
     def flatten!(options = {}, builder_options = {})
       flatten_tables!(tables, root, config)
-
       self
     end
 
@@ -76,9 +75,12 @@ module FlattenDB
 
     private
 
-    def parse
+    def parse_xml(tables)
+      document = LibXML::XML::Document.io(input)
+      database = document.root.find_first('database[@name]')
+
       database.find('table_data[@name]').each { |table|
-        rows = []
+        rows = tables[table[:name]] ||= []
 
         table.find('row').each { |row|
           fields = {}
@@ -89,9 +91,44 @@ module FlattenDB
 
           rows << fields
         }
-
-        tables[table[:name]] = rows
       }
+
+      database[:name]
+    end
+
+    def parse_sql(tables)
+      columns, table, name = Hash.new { |h, k| h[k] = [] }, nil, nil
+      parser = Athena::Formats::MySQL::SQLParser.new
+
+      input.each { |line|
+        case line
+          when /\AUSE\s+`(.+?)`/i
+            raise 'dump file contains more than one database' if name
+            name = $1
+          when /\ACREATE\s+TABLE\s+`(.+?)`/i
+            table = $1
+          when /\A\s+`(.+?)`/i
+            columns[table] << $1 if table
+          when /\A\).*;\Z/
+            table = nil
+          when /\AINSERT\s+INTO\s+`(.+?)`\s+VALUES\s*(.*);\Z/i
+            _columns = columns[_table = $1]
+            next if _columns.empty?
+
+            parser.parse($2) { |row|
+              fields = {}
+
+              row.each_with_index { |value, index|
+                column = _columns[index] or next
+                fields[column] = value.to_s
+              }
+
+              (tables[_table] ||= []) << fields
+            }
+        end
+      }
+
+      name
     end
 
     def flatten_tables!(tables, primary_table, config)
@@ -144,7 +181,7 @@ module FlattenDB
       builder.tag!(table) {
         rows.each { |row|
           row_to_xml('row', row, builder)
-        }
+        } if rows
       }
     end
 

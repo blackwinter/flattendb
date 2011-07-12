@@ -1,55 +1,7 @@
 #! /usr/bin/ruby
 
-#--
-###############################################################################
-#                                                                             #
-# flattendb -- Flatten relational databases                                   #
-#                                                                             #
-# Copyright (C) 2007-2011 University of Cologne,                              #
-#                         Albertus-Magnus-Platz,                              #
-#                         50923 Cologne, Germany                              #
-#                                                                             #
-# Authors:                                                                    #
-#     Jens Wille <jens.wille@uni-koeln.de>                                    #
-#                                                                             #
-# flattendb is free software; you can redistribute it and/or modify it under  #
-# the terms of the GNU Affero General Public License as published by the Free #
-# Software Foundation; either version 3 of the License, or (at your option)   #
-# any later version.                                                          #
-#                                                                             #
-# flattendb is distributed in the hope that it will be useful, but WITHOUT    #
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       #
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License #
-# for more details.                                                           #
-#                                                                             #
-# You should have received a copy of the GNU Affero General Public License    #
-# along with flattendb. If not, see <http://www.gnu.org/licenses/>.           #
-#                                                                             #
-###############################################################################
-#++
-
-unless $type
-  $type = :mdb
-  load File.join(File.dirname(__FILE__), 'flattendb')
-else
-  case $options[:intype]
-    when :xml
-      $infiles.each { |infile|
-        unless IO.read(infile, 6) == '<?xml '
-          abort "Input file doesn't seem to be a valid XML file, XML declaration missing: #{infile}"
-        end
-      }
-    when :mdb
-      tables_cmd = 'mdb-tables'
-      export_cmd = 'mdb-export'
-
-      require_commands(tables_cmd, export_cmd, :pkg => 'mdbtools')
-      require_libraries('fastercsv')
-
-      $infiles.map! { |infile|
-        $dump_file
-      }
-  end
-end
+ext = File.extname(__FILE__)
+$flattendb_type = ext.sub(/\A\./, '')
+load __FILE__.sub(/#{Regexp.escape(ext)}\z/, '')
 
 # vim:ft=ruby

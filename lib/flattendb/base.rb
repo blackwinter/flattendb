@@ -27,9 +27,8 @@
 #++
 
 require 'yaml'
-
-require 'rubygems'
 require 'builder'
+require 'flattendb'
 
 module FlattenDB
 
@@ -49,8 +48,12 @@ module FlattenDB
 
     class << self
 
+      def to_flat!(*args)
+        new(*args).flatten!.to_xml
+      end
+
       def types
-        Base.instance_variable_get :@types
+        Base.instance_variable_get(:@types)
       end
 
       def [](type)
@@ -67,40 +70,13 @@ module FlattenDB
 
     attr_reader :root, :config, :input, :output
 
-    def initialize(infiles, outfile, config)
-      config = case config
-        when Hash
-          config
-        when String
-          # assume file name
-          YAML.load_file(config)
-        else
-          raise ArgumentError, "invalid config argument of type '#{config.class}'"
-      end
+    def initialize(options)
+      config = options.select { |k, _| k.is_a?(String) }
       raise ArgumentError, "can't have more than one primary (root) table" if config.size > 1
 
       (@root, @config), _ = *config  # get "first" (and only) hash element
 
-      @input = [*infiles].map { |infile|
-        case infile
-          when String
-            infile
-          when File
-            infile.path
-          else
-            raise ArgumentError, "invalid infile argument of type '#{infile.class}'"
-        end
-      }
-
-      @output = case outfile
-        when IO
-          outfile
-        when String
-          # assume file name
-          File.open(outfile, 'w')
-        else
-          raise ArgumentError, "invalid outfile argument of type '#{outfile.class}'"
-      end
+      @input, @output = options.values_at(:input, :output)
     end
 
     def flatten!(*args)

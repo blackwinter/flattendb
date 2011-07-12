@@ -26,16 +26,28 @@
 ###############################################################################
 #++
 
-require 'flattendb/base'
+require 'fastercsv'
+require 'nuggets/file/which'
+require 'flattendb'
 
 module FlattenDB
 
   class MDB < Base
 
-    JOIN_KEY = '@key'
-
-    def initialize(infiles, outfile, config)
+    def initialize(options)
       super
+      parse
+    end
+
+    def parse
+      tables_cmd, export_cmd = 'mdb-tables', 'mdb-export'
+
+      [tables_cmd, export_cmd].each { |cmd|
+        next if File.which(cmd)
+        abort "Command not found: #{cmd}! Please install `mdbtools' first."
+      }
+
+      # ...
     end
 
     def flatten!(options = {}, builder_options = {})
