@@ -26,23 +26,12 @@
 ###############################################################################
 #++
 
-require 'optparse'
-require 'yaml'
-require 'zlib'
+require 'nuggets/util/cli'
 require 'flattendb'
 
 module FlattenDB
 
-  class CLI
-
-    USAGE = "Usage: #{$0} [-h|--help] [options]"
-
-    DEFAULTS = {
-      :input  => '-',
-      :inputs => [],
-      :output => '-',
-      :config => 'config.yaml'
-    }
+  class CLI < ::Util::CLI
 
     TYPES = {
       :mysql => {
@@ -64,31 +53,30 @@ module FlattenDB
       }
     }
 
-    def self.execute(type = nil, *args)
-      new(type).execute(*args)
+    class << self
+
+      def defaults
+        super.merge(
+          :input  => '-',
+          :inputs => [],
+          :output => '-',
+          :config => 'config.yaml'
+        )
+      end
+
+      def execute(type = nil, *args)
+        new(nil, type).execute(*args)
+      end
+
     end
 
-    attr_reader :type, :options, :config, :defaults
-    attr_reader :stdin, :stdout, :stderr
+    attr_reader :type
 
-    def initialize(type = nil, defaults = DEFAULTS)
-      @defaults = defaults
-
-      reset(type)
-
-      # prevent backtrace on ^C
-      trap(:INT) { exit 130 }
-    end
-
-    def execute(arguments = [], *inouterr)
-      reset(type, *inouterr)
-
-      parse_options(arguments, defaults)
-
+    def run(arguments)
       if type
         require "flattendb/types/#{type}"
       else
-        abort 'Database type is required!'
+        quit 'Database type is required!'
       end
 
       options[:input] = if type == :mdb
@@ -108,78 +96,44 @@ module FlattenDB
         )
       end
 
-      abort USAGE unless arguments.empty?
+      quit unless arguments.empty?
 
       options[:output] = open_file_or_std(options[:output], true)
 
       FlattenDB[type].to_flat!(options)
-    ensure
-      options[:output].close if options[:output].is_a?(Zlib::GzipWriter)
-    end
-
-    def reset(type = nil, stdin = STDIN, stdout = STDOUT, stderr = STDERR)
-      @stdin, @stdout, @stderr = stdin, stdout, stderr
-      self.type, @options, @config = type, {}, {}
     end
 
     private
 
+    def init(type)
+      super()
+      self.type = type
+    end
+
     def type=(type)
       if type
         @type = type.to_s.downcase.to_sym
-        abort "Database type not supported: #{type}" unless TYPES.has_key?(@type)
+        quit "Database type not supported: #{type}" unless TYPES.has_key?(@type)
       else
         @type = nil
       end
     end
 
-    def open_file_or_std(file, write = false)
-      if file == '-'
-        write ? stdout : stdin
-      else
-        gz = file =~ /\.gz\z/i
-
-        if write
-          gz ? Zlib::GzipWriter.open(file) : File.open(file, 'w')
-        else
-          abort "No such file: #{file}" unless File.readable?(file)
-          (gz ? Zlib::GzipReader : File).open(file)
-        end
-      end
+    def option_parser
+      @sorted_types = TYPES.keys.sort_by { |t| t.to_s }
+      super
+    ensure
+      remove_instance_variable(:@sorted_types)
     end
 
-    def warn(msg, output = stderr)
-      output.puts(msg)
-    end
-
-    def abort(msg = nil, status = 1, output = stderr)
-      warn(msg, output) if msg
-      exit(status)
-    end
-
-    def parse_options(arguments, defaults)
-      option_parser(defaults).parse!(arguments)
-
-      config_file = options[:config] || defaults[:config]
-      @config = YAML.load_file(config_file) if File.readable?(config_file)
-
-      [config, defaults].each { |hash| hash.each { |key, value| options[key] ||= value } }
-    end
-
-    def option_parser(defaults)
-      sorted_types = TYPES.keys.sort_by { |t| t.to_s }
-
-      OptionParser.new { |opts|
-        opts.banner = USAGE
-
+    def pre_opts(opts)
       if type
         opts.separator ''
         opts.separator "TYPE = #{type} (#{TYPES[type][:title]})"
       end
+    end
 
-        opts.separator ''
-        opts.separator 'Options:'
-
+    def opts(opts)
       unless type
         opts.on('-t', '--type TYPE', 'Type of database [REQUIRED]') { |type|
           self.type = type
@@ -188,39 +142,29 @@ module FlattenDB
         opts.separator ''
       end
 
-        opts.on('-i', '--input FILE', 'Input file(s) [Default: STDIN]') { |input|
-          (options[:inputs] ||= []) << input
-        }
+      opts.on('-i', '--input FILE', 'Input file(s) [Default: STDIN]') { |input|
+        (options[:inputs] ||= []) << input
+      }
 
-        opts.on('-o', '--output FILE', 'Output file (flat XML) [Default: STDOUT]') { |output|
-          options[:output] = output
-        }
+      opts.on('-o', '--output FILE', 'Output file (flat XML) [Default: STDOUT]') { |output|
+        options[:output] = output
+      }
 
-        opts.on('-c', '--config FILE', "Configuration file (YAML) [Default: #{defaults[:config]}#{' (currently not present)' unless File.readable?(defaults[:config])}]") { |config|
-          options[:config] = config
-        }
+      opts.on('-c', '--config FILE', "Configuration file (YAML) [Default: #{defaults[:config]}#{' (currently not present)' unless File.readable?(defaults[:config])}]") { |config|
+        options[:config] = config
+      }
 
-        opts.separator ''
-        opts.separator 'Database-specific options:'
+      opts.separator ''
+      opts.separator 'Database-specific options:'
 
-        type ? type_options(opts) : sorted_types.each { |t| type_options(opts, true, t) }
+      type ? type_options(opts) : @sorted_types.each { |t| type_options(opts, true, t) }
+    end
 
-        opts.separator ''
-        opts.separator 'Generic options:'
-
-        opts.on('-h', '--help', 'Print this help message and exit') {
-          abort opts.to_s
-        }
-
-        opts.on('--version', 'Print program version and exit') {
-          abort "#{File.basename($0)} v#{FlattenDB::VERSION}"
-        }
-
+    def post_opts(opts)
       unless type
         opts.separator ''
-        opts.separator "Supported database types: #{sorted_types.map { |t| "#{t} (#{TYPES[t][:title]})" }.join(', ')}."
+        opts.separator "Supported database types: #{@sorted_types.map { |t| "#{t} (#{TYPES[t][:title]})" }.join(', ')}."
       end
-      }
     end
 
     def type_options(opts, heading = false, type = type)

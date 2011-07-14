@@ -29,9 +29,4 @@
 #++
 
 require 'flattendb/cli'
-
-begin
-  FlattenDB::CLI.execute($flattendb_type, ARGV, STDIN, STDOUT, STDERR)
-rescue ArgumentError => err
-  abort err
-end
+FlattenDB::CLI.execute($flattendb)

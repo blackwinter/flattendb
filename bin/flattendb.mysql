@@ -1,7 +1,6 @@
 #! /usr/bin/ruby
 
-ext = File.extname(__FILE__)
-$flattendb_type = ext.sub(/\A\./, '')
+$flattendb = (ext = File.extname(__FILE__)).sub(/\A\./, '')
 load __FILE__.sub(/#{Regexp.escape(ext)}\z/, '')
 
 # vim:ft=ruby
