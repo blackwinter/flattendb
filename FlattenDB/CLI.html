@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: FlattenDB::CLI</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/flattendb/cli_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/flattendb/cli.rb">lib/flattendb/cli.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Util::CLI</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-defaults">::defaults</a></li>
+          
+          <li><a href="#method-c-execute">::execute</a></li>
+          
+          <li><a href="#method-i-init">#init</a></li>
+          
+          <li><a href="#method-i-option_parser">#option_parser</a></li>
+          
+          <li><a href="#method-i-opts">#opts</a></li>
+          
+          <li><a href="#method-i-post_opts">#post_opts</a></li>
+          
+          <li><a href="#method-i-pre_opts">#pre_opts</a></li>
+          
+          <li><a href="#method-i-run">#run</a></li>
+          
+          <li><a href="#method-i-type-3D">#type=</a></li>
+          
+          <li><a href="#method-i-type_options">#type_options</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../ChangeLog.html">ChangeLog</a></li>
+        
+          <li class="file"><a href="../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../FlattenDB.html">FlattenDB</a></li>
+        
+          <li><a href="../FlattenDB/Base.html">FlattenDB::Base</a></li>
+        
+          <li><a href="../FlattenDB/CLI.html">FlattenDB::CLI</a></li>
+        
+          <li><a href="../FlattenDB/MDB.html">FlattenDB::MDB</a></li>
+        
+          <li><a href="../FlattenDB/MySQL.html">FlattenDB::MySQL</a></li>
+        
+          <li><a href="../FlattenDB/Version.html">FlattenDB::Version</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">FlattenDB::CLI</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+      <!-- Constants -->
+      <div id="constants-list" class="section">
+        <h3 class="section-header">Constants</h3>
+        <dl>
+        
+          <dt><a name="TYPES">TYPES</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+        </dl>
+      </div>
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="type-attribute-method" class="method-detail">
+          <a name="type"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">type</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="defaults-method" class="method-detail ">
+          <a name="method-c-defaults"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">defaults</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="defaults-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">defaults</span>
+  <span class="ruby-keyword">super</span>.<span class="ruby-identifier">merge</span>(
+    <span class="ruby-value">:input</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'-'</span>,
+    <span class="ruby-value">:inputs</span> =<span class="ruby-operator">&gt;</span> [],
+    <span class="ruby-value">:output</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'-'</span>,
+    <span class="ruby-value">:config</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'config.yaml'</span>
+  )
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- defaults-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- defaults-method -->
+
+      
+        <div id="execute-method" class="method-detail ">
+          <a name="method-c-execute"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">execute</span><span
+              class="method-args">(type = nil, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="execute-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">execute</span>(<span class="ruby-identifier">type</span> = <span class="ruby-keyword">nil</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">type</span>).<span class="ruby-identifier">execute</span>(*<span class="ruby-identifier">args</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- execute-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- execute-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="run-method" class="method-detail ">
+          <a name="method-i-run"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">run</span><span
+              class="method-args">(arguments)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="run-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">arguments</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-node">&quot;flattendb/types/#{type}&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">quit</span> <span class="ruby-string">'Database type is required!'</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:input</span>] = <span class="ruby-keyword">if</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:mdb</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>].<span class="ruby-identifier">empty?</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:input</span>]
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>].<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">arguments</span>)
+        <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">clear</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>].<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">open_file_or_std</span>(<span class="ruby-identifier">file</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">open_file_or_std</span>(
+      <span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>].<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">shift</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:input</span>]
+    )
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">quit</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:output</span>] = <span class="ruby-identifier">open_file_or_std</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:output</span>], <span class="ruby-keyword">true</span>)
+
+  <span class="ruby-constant">FlattenDB</span>[<span class="ruby-identifier">type</span>].<span class="ruby-identifier">to_flat!</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- run-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- run-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+      <div id="private-instance-method-details" class="method-section section">
+        <h3 class="section-header">Private Instance Methods</h3>
+
+      
+        <div id="init-method" class="method-detail ">
+          <a name="method-i-init"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">init</span><span
+              class="method-args">(type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="init-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">init</span>(<span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">super</span>()
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type</span> = <span class="ruby-identifier">type</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- init-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- init-method -->
+
+      
+        <div id="option_parser-method" class="method-detail ">
+          <a name="method-i-option_parser"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">option_parser</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="option_parser-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">option_parser</span>
+  <span class="ruby-ivar">@sorted_types</span> = <span class="ruby-constant">TYPES</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">to_s</span> }
+  <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">remove_instance_variable</span>(<span class="ruby-value">:@sorted_types</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- option_parser-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- option_parser-method -->
+
+      
+        <div id="opts-method" class="method-detail ">
+          <a name="method-i-opts"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">opts</span><span
+              class="method-args">(opts)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="opts-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">opts</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">'-t'</span>, <span class="ruby-string">'--type TYPE'</span>, <span class="ruby-string">'Type of database [REQUIRED]'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">type</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type</span> = <span class="ruby-identifier">type</span>
+    }
+
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">''</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">'-i'</span>, <span class="ruby-string">'--input FILE'</span>, <span class="ruby-string">'Input file(s) [Default: STDIN]'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+    (<span class="ruby-identifier">options</span>[<span class="ruby-value">:inputs</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">input</span>
+  }
+
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">'-o'</span>, <span class="ruby-string">'--output FILE'</span>, <span class="ruby-string">'Output file (flat XML) [Default: STDOUT]'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">output</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:output</span>] = <span class="ruby-identifier">output</span>
+  }
+
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">'-c'</span>, <span class="ruby-string">'--config FILE'</span>, <span class="ruby-node">&quot;Configuration file (YAML) [Default: #{defaults[:config]}#{' (currently not present)' unless File.readable?(defaults[:config])}]&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">config</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:config</span>] = <span class="ruby-identifier">config</span>
+  }
+
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">'Database-specific options:'</span>
+
+  <span class="ruby-identifier">type</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">type_options</span>(<span class="ruby-identifier">opts</span>) <span class="ruby-operator">:</span> <span class="ruby-ivar">@sorted_types</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">type_options</span>(<span class="ruby-identifier">opts</span>, <span class="ruby-keyword">true</span>, <span class="ruby-identifier">t</span>) }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- opts-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- opts-method -->
+
+      
+        <div id="post_opts-method" class="method-detail ">
+          <a name="method-i-post_opts"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">post_opts</span><span
+              class="method-args">(opts)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="post_opts-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_opts</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">''</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-node">&quot;Supported database types: #{@sorted_types.map { |t| &quot;#{t} (#{TYPES[t][:title]})&quot; }.join(', ')}.&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- post_opts-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- post_opts-method -->
+
+      
+        <div id="pre_opts-method" class="method-detail ">
+          <a name="method-i-pre_opts"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pre_opts</span><span
+              class="method-args">(opts)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="pre_opts-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pre_opts</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">''</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-node">&quot;TYPE = #{type} (#{TYPES[type][:title]})&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- pre_opts-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pre_opts-method -->
+
+      
+        <div id="type-3D-method" class="method-detail ">
+          <a name="method-i-type-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">type=</span><span
+              class="method-args">(type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="type-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type=</span>(<span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-ivar">@type</span> = <span class="ruby-identifier">type</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">to_sym</span>
+    <span class="ruby-identifier">quit</span> <span class="ruby-node">&quot;Database type not supported: #{type}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">TYPES</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-ivar">@type</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@type</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- type-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- type-3D-method -->
+
+      
+        <div id="type_options-method" class="method-detail ">
+          <a name="method-i-type_options"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">type_options</span><span
+              class="method-args">(opts, heading = false, type = type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="type_options-source">
+<pre>
+<span class="ruby-comment"># File lib/flattendb/cli.rb, line 170</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type_options</span>(<span class="ruby-identifier">opts</span>, <span class="ruby-identifier">heading</span> = <span class="ruby-keyword">false</span>, <span class="ruby-identifier">type</span> = <span class="ruby-identifier">type</span>)
+  <span class="ruby-identifier">cfg</span> = <span class="ruby-constant">TYPES</span>[<span class="ruby-identifier">type</span>]
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">heading</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">''</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-node">&quot; - [#{type}] #{cfg[:title]}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">cfg</span>[<span class="ruby-value">:opts</span>][<span class="ruby-identifier">opts</span>, <span class="ruby-identifier">options</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- type_options-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- type_options-method -->
+
+      
+      </div><!-- private-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
