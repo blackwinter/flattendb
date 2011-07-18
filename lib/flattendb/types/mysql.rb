@@ -164,15 +164,16 @@ module FlattenDB
     def inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table)
       raise ArgumentError, "no such foreign table: #{foreign_table}" unless foreign_tables.has_key?(foreign_table)
 
-      foreign_rows = foreign_tables[foreign_table]
+      foreign_rows = Hash.new { |h, k| h[k] = [] }
+
+      foreign_tables[foreign_table].each { |foreign_row|
+        foreign_rows[foreign_row[foreign_key]] << foreign_row
+      }
 
       tables[primary_table].each { |row|
         if row.has_key?(local_key)
-          foreign_content = foreign_rows.select { |foreign_row|
-            row[local_key] == foreign_row[foreign_key]
-          }
-
-          row[foreign_table_name] = foreign_content unless foreign_content.empty?
+          rows = foreign_rows[row[local_key]]
+          row[foreign_table_name] = rows unless rows.empty?
         end
       }
     end
