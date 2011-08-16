@@ -111,11 +111,15 @@ module FlattenDB
             columns[table] << $1 if table
           when /\A\).*;\Z/
             table = nil
-          when /\AINSERT\s+INTO\s+`(.+?)`\s+VALUES\s*(.*);\Z/i
-            _columns = columns[_table = $1]
+          when /\AINSERT\s+INTO\s+`(.+?)`\s+(?:\((.+?)\)\s+)?VALUES\s*(.*);\Z/i
+            _table, _columns, _values = $1, $2, $3
+
+            _columns = _columns.nil? ? columns[_table] :
+              _columns.split(/\s*,\s*/).each { |column| column.delete!('`') }
+
             next if _columns.empty?
 
-            parser.parse($2) { |row|
+            parser.parse(_values) { |row|
               fields = {}
 
               row.each_with_index { |value, index|
