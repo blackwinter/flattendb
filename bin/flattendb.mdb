@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 
 $flattendb = (ext = File.extname(__FILE__)).sub(/\A\./, '')
 load __FILE__.sub(/#{Regexp.escape(ext)}\z/, '')
