@@ -154,6 +154,8 @@
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -431,7 +433,7 @@
             
             <div class="method-source-code" id="field_to_xml-source">
 <pre>
-<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 197</span>
+<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 201</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">content</span>
     <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
@@ -475,7 +477,7 @@
             
             <div class="method-source-code" id="flatten_tables-21-source">
 <pre>
-<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 134</span>
+<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten_tables!</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">config</span>)
   <span class="ruby-identifier">config</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">spec</span>
@@ -534,7 +536,7 @@
             
             <div class="method-source-code" id="inject_foreign-source">
 <pre>
-<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 164</span>
+<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 168</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inject_foreign</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_tables</span> = <span class="ruby-identifier">tables</span>, <span class="ruby-identifier">foreign_table_name</span> = <span class="ruby-identifier">foreign_table</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;no such foreign table: #{foreign_table}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">foreign_tables</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">foreign_table</span>)
 
@@ -596,11 +598,15 @@
         <span class="ruby-identifier">columns</span>[<span class="ruby-identifier">table</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">$1</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">table</span>
       <span class="ruby-keyword">when</span> <span class="ruby-regexp">/\A\).*;\Z/</span>
         <span class="ruby-identifier">table</span> = <span class="ruby-keyword">nil</span>
-      <span class="ruby-keyword">when</span> <span class="ruby-regexp">/\AINSERT\s+INTO\s+`(.+?)`\s+VALUES\s*(.*);\Z/</span>
-        <span class="ruby-identifier">_columns</span> = <span class="ruby-identifier">columns</span>[<span class="ruby-identifier">_table</span> = <span class="ruby-node">$1</span>]
+      <span class="ruby-keyword">when</span> <span class="ruby-regexp">/\AINSERT\s+INTO\s+`(.+?)`\s+(?:\((.+?)\)\s+)?VALUES\s*(.*);\Z/</span>
+        <span class="ruby-identifier">_table</span>, <span class="ruby-identifier">_columns</span>, <span class="ruby-identifier">_values</span> = <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>, <span class="ruby-node">$3</span>
+
+        <span class="ruby-identifier">_columns</span> = <span class="ruby-identifier">_columns</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">columns</span>[<span class="ruby-identifier">_table</span>] <span class="ruby-operator">:</span>
+          <span class="ruby-identifier">_columns</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/\s*,\s*/</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">column</span><span class="ruby-operator">|</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">delete!</span>(<span class="ruby-string">'`'</span>) }
+
         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">_columns</span>.<span class="ruby-identifier">empty?</span>
 
-        <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-node">$2</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">_values</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
           <span class="ruby-identifier">fields</span> = {}
 
           <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each_with_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
@@ -694,7 +700,7 @@
             
             <div class="method-source-code" id="row_to_xml-source">
 <pre>
-<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 189</span>
+<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">row</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">name</span>) {
     <span class="ruby-identifier">row</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
@@ -731,7 +737,7 @@
             
             <div class="method-source-code" id="table_to_xml-source">
 <pre>
-<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 181</span>
+<span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 185</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">table</span>) {
     <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
