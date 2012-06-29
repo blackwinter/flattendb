@@ -107,7 +107,7 @@ module FlattenDB
             name = $1
           when /\ACREATE\s+TABLE\s+`(.+?)`/i
             table = $1
-          when /\A\s+`(.+?)`/i
+          when /\A\s+`(.+?)`/
             columns[table] << $1 if table
           when /\A\).*;\Z/
             table = nil
@@ -160,9 +160,7 @@ module FlattenDB
         end
       } if config
 
-      tables.delete_if { |table, _|
-        table != primary_table
-      }
+      tables.delete_if { |table, _| table != primary_table }
     end
 
     def inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table)
