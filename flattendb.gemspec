@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors = [%q{Jens Wille}]
   s.date = %q{2011-08-16}
   s.description = %q{Flatten relational databases.}
-  s.email = %q{jens.wille@uni-koeln.de}
+  s.email = %q{jens.wille@gmail.com}
   s.executables = [%q{flattendb}, %q{flattendb.mdb}, %q{flattendb.mysql}]
   s.extra_rdoc_files = [%q{README}, %q{COPYING}, %q{ChangeLog}]
   s.files = [%q{lib/flattendb.rb}, %q{lib/flattendb/cli.rb}, %q{lib/flattendb/version.rb}, %q{lib/flattendb/base.rb}, %q{lib/flattendb/types/mysql.rb}, %q{lib/flattendb/types/mdb.rb}, %q{bin/flattendb}, %q{bin/flattendb.mdb}, %q{bin/flattendb.mysql}, %q{README}, %q{ChangeLog}, %q{Rakefile}, %q{COPYING}, %q{example/mysql-sample.flat.xml}, %q{example/mysql-sample.flat-sql.xml}, %q{example/mysql-sample2flat.yaml}, %q{example/mysql-sample.xml}, %q{example/mysql-sample.sql}]

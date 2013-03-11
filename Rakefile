@@ -13,7 +13,7 @@ begin
       :version      => FlattenDB::VERSION,
       :summary      => %q{Flatten relational databases.},
       :author       => %q{Jens Wille},
-      :email        => %q{jens.wille@uni-koeln.de},
+      :email        => %q{jens.wille@gmail.com},
       :dependencies => %w[libxml-ruby builder] << ['ruby-nuggets', '>= 0.7.3'] << ['athena', '>= 0.1.5']
     }
   }}
