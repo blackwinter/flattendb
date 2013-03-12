@@ -200,7 +200,7 @@ module FlattenDB
 
     def field_to_xml(field, content, builder)
       case content
-        when String
+        when String, Numeric, true, false, nil
           builder.tag!(column_to_element(field), content)
         when Array
           content.each { |item|
