@@ -1,65 +1,127 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-  <title>flattendb Application documentation (v0.1.3)</title>
+<title>flattendb Application documentation (v0.2.0)</title>
 
-  <link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
 
-</head>
-<body class="indexpage">
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
+
+<body>
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
   
-  <h1>flattendb Application documentation (v0.1.3)</h1>
-
+    <li class="file"><a href="./COPYING.html">COPYING</a>
   
-  <div id="main">
-    
+    <li class="file"><a href="./ChangeLog.html">ChangeLog</a>
+  
+    <li class="file"><a href="./README.html">README</a>
+  
+  </ul>
+</nav>
 
-<h2>VERSION</h2>
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
 
-<p>This documentation refers to flattendb version 0.1.3</p>
+  <ul class="link-list">
+  
+    <li><a href="./FlattenDB.html">FlattenDB</a>
+  
+    <li><a href="./FlattenDB/Base.html">FlattenDB::Base</a>
+  
+    <li><a href="./FlattenDB/CLI.html">FlattenDB::CLI</a>
+  
+    <li><a href="./FlattenDB/MDB.html">FlattenDB::MDB</a>
+  
+    <li><a href="./FlattenDB/MySQL.html">FlattenDB::MySQL</a>
+  
+    <li><a href="./FlattenDB/Version.html">FlattenDB::Version</a>
+  
+  </ul>
+</nav>
 
-<h2>DESCRIPTION</h2>
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+
+<h1 id="label-flattendb+-+Flatten+relational+databases">flattendb - Flatten relational databases<span><a href="#label-flattendb+-+Flatten+relational+databases">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<h2 id="label-VERSION">VERSION<span><a href="#label-VERSION">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>This documentation refers to flattendb version 0.2.0</p>
+
+<h2 id="label-DESCRIPTION">DESCRIPTION<span><a href="#label-DESCRIPTION">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 
 <p>TODO: well, the description… ;-)</p>
 
-<h2>LINKS</h2>
+<h2 id="label-LINKS">LINKS<span><a href="#label-LINKS">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 
 <p></p>
-<table class="rdoc-list"><tr><td class="rdoc-term"><p>Documentation</p></td>
-<td>
+<dl class="rdoc-list note-list"><dt>Documentation
+<dd>
 <p><a
 href="http://prometheus.rubyforge.org/flattendb">prometheus.rubyforge.org/flattendb</a></p>
-</td></tr><tr><td class="rdoc-term"><p>Source code</p></td>
-<td>
+</dd><dt>Source code
+<dd>
 <p><a
 href="http://github.com/blackwinter/flattendb">github.com/blackwinter/flattendb</a></p>
-</td></tr><tr><td class="rdoc-term"><p>RubyForge project</p></td>
-<td>
+</dd><dt>RubyForge project
+<dd>
 <p><a
 href="http://rubyforge.org/projects/prometheus">rubyforge.org/projects/prometheus</a></p>
-</td></tr></table>
+</dd></dl>
 
-<h2>AUTHORS</h2>
+<h2 id="label-AUTHORS">AUTHORS<span><a href="#label-AUTHORS">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 <ul><li>
 <p>Jens Wille &lt;<a
-href="mailto:jens.wille@uni-koeln.de">jens.wille@uni-koeln.de</a>&gt;</p>
+href="mailto:jens.wille@gmail.com">jens.wille@gmail.com</a>&gt;</p>
 </li></ul>
 
-<h2>LICENSE AND COPYRIGHT</h2>
+<h2 id="label-LICENSE+AND+COPYRIGHT">LICENSE AND COPYRIGHT<span><a href="#label-LICENSE+AND+COPYRIGHT">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 
-<p>Copyright (C) 2007-2011 University of Cologne, Albertus-Magnus-Platz, 50923
+<p>Copyright (C) 2007-2012 University of Cologne, Albertus-Magnus-Platz, 50923
 Cologne, Germany</p>
+
+<p>Copyright (C) 2013 Jens Wille</p>
 
 <p>flattendb is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
@@ -73,125 +135,13 @@ for more details.</p>
 
 <p>You should have received a copy of the GNU Affero General Public License
 along with flattendb. If not, see &lt;<a
-href="http://www.gnu.org/licenses/">www.gnu.org/licenses/</a>&gt;.</p>
+href="http://www.gnu.org/licenses">www.gnu.org/licenses</a>/&gt;.</p>
+</div>
 
-  </div>
-  
 
-  
-  
-  <h2>Files</h2>
-  <ul>
-    
-      <li class="file"><a href="COPYING.html">COPYING</a></li>
-    
-      <li class="file"><a href="ChangeLog.html">ChangeLog</a></li>
-    
-      <li class="file"><a href="README.html">README</a></li>
-    
-  </ul>
-  
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 
-  <h2 id="classes">Classes/Modules</h2>
-  <ul>
-    
-    <li class="module"><a href="FlattenDB.html">FlattenDB</a></li>
-    
-    <li class="class"><a href="FlattenDB/Base.html">FlattenDB::Base</a></li>
-    
-    <li class="class"><a href="FlattenDB/CLI.html">FlattenDB::CLI</a></li>
-    
-    <li class="class"><a href="FlattenDB/MDB.html">FlattenDB::MDB</a></li>
-    
-    <li class="class"><a href="FlattenDB/MySQL.html">FlattenDB::MySQL</a></li>
-    
-    <li class="module"><a href="FlattenDB/Version.html">FlattenDB::Version</a></li>
-    
-  </ul>
-
-  <h2 id="methods">Methods</h2>
-  <ul>
-    
-      <li><a href="FlattenDB/Base.html#method-c-5B-5D">::[] &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-c-defaults">::defaults &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-c-execute">::execute &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-c-inherited">::inherited &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/MDB.html#method-c-new">::new &mdash; FlattenDB::MDB</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-c-new">::new &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-c-new">::new &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/Version.html#method-c-to_a">::to_a &mdash; FlattenDB::Version</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-c-to_flat-21">::to_flat! &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/Version.html#method-c-to_s">::to_s &mdash; FlattenDB::Version</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-c-types">::types &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB.html#method-i-5B-5D">#[] &mdash; FlattenDB</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-i-column_to_element">#column_to_element &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-field_to_xml">#field_to_xml &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-i-flatten-21">#flatten! &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/MDB.html#method-i-flatten-21">#flatten! &mdash; FlattenDB::MDB</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-flatten-21">#flatten! &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-flatten_tables-21">#flatten_tables! &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-init">#init &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-i-initialize_builder">#initialize_builder &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-inject_foreign">#inject_foreign &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-option_parser">#option_parser &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-opts">#opts &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/MDB.html#method-i-parse">#parse &mdash; FlattenDB::MDB</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-parse">#parse &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-parse_sql">#parse_sql &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-parse_xml">#parse_xml &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-post_opts">#post_opts &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-pre_opts">#pre_opts &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-row_to_xml">#row_to_xml &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-run">#run &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-table_to_xml">#table_to_xml &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/MDB.html#method-i-to_xml">#to_xml &mdash; FlattenDB::MDB</a></li>
-    
-      <li><a href="FlattenDB/Base.html#method-i-to_xml">#to_xml &mdash; FlattenDB::Base</a></li>
-    
-      <li><a href="FlattenDB/MySQL.html#method-i-to_xml">#to_xml &mdash; FlattenDB::MySQL</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-type-3D">#type= &mdash; FlattenDB::CLI</a></li>
-    
-      <li><a href="FlattenDB/CLI.html#method-i-type_options">#type_options &mdash; FlattenDB::CLI</a></li>
-    
-  </ul>
-
-  <div id="validator-badges">
-    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-      Rdoc Generator</a> 2</small>.</p>
-  </div>
-</body>
-</html>

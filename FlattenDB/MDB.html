@@ -1,321 +1,315 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+
+<html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-  <title>Class: FlattenDB::MDB</title>
+<title>class FlattenDB::MDB - flattendb Application documentation (v0.2.0)</title>
 
-  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
 
-  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
 
-</head>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
 <body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
 
-  <div id="metadata">
-    <div id="home-metadata">
-      <div id="home-section" class="section">
-        <h3 class="section-header">
-          <a href="../index.html">Home</a>
-          <a href="../index.html#classes">Classes</a>
-          <a href="../index.html#methods">Methods</a>
-        </h3>
-      </div>
-    </div>
 
-    <div id="file-metadata">
-      <div id="file-list-section" class="section">
-        <h3 class="section-header">In Files</h3>
-        <div class="section-body">
-          <ul>
-          
-            <li><a href="../lib/flattendb/types/mdb_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="lib/flattendb/types/mdb.rb">lib/flattendb/types/mdb.rb</a></li>
-          
-          </ul>
-        </div>
-      </div>
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
 
-      
-    </div>
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
 
-    <div id="class-metadata">
-      
-      <!-- Parent Class -->
-      <div id="parent-class-section" class="section">
-        <h3 class="section-header">Parent</h3>
-        
-        <p class="link"><a href="Base.html">FlattenDB::Base</a></p>
-        
-      </div>
-      
 
-      
+  
 
-      
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/flattendb/types/mdb.rb
+  </ul>
+</nav>
 
-      
-      <!-- Method Quickref -->
-      <div id="method-list-section" class="section">
-        <h3 class="section-header">Methods</h3>
-        <ul class="link-list">
-          
-          <li><a href="#method-c-new">::new</a></li>
-          
-          <li><a href="#method-i-flatten-21">#flatten!</a></li>
-          
-          <li><a href="#method-i-parse">#parse</a></li>
-          
-          <li><a href="#method-i-to_xml">#to_xml</a></li>
-          
-        </ul>
-      </div>
-      
-
-      
-    </div>
-
-    <div id="project-metadata">
-      
-      
-      <div id="fileindex-section" class="section project-section">
-        <h3 class="section-header">Files</h3>
-        <ul>
-        
-          <li class="file"><a href="../COPYING.html">COPYING</a></li>
-        
-          <li class="file"><a href="../ChangeLog.html">ChangeLog</a></li>
-        
-          <li class="file"><a href="../README.html">README</a></li>
-        
-        </ul>
-      </div>
-      
-
-      <div id="classindex-section" class="section project-section">
-        <h3 class="section-header">Class/Module Index
-          <span class="search-toggle"><img src="../images/find.png"
-            height="16" width="16" alt="[+]"
-            title="show/hide quicksearch" /></span></h3>
-        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
-        <fieldset>
-          <legend>Quicksearch</legend>
-          <input type="text" name="quicksearch" value=""
-            class="quicksearch-field" />
-        </fieldset>
-        </form>
-
-        <ul class="link-list">
-        
-          <li><a href="../FlattenDB.html">FlattenDB</a></li>
-        
-          <li><a href="../FlattenDB/Base.html">FlattenDB::Base</a></li>
-        
-          <li><a href="../FlattenDB/CLI.html">FlattenDB::CLI</a></li>
-        
-          <li><a href="../FlattenDB/MDB.html">FlattenDB::MDB</a></li>
-        
-          <li><a href="../FlattenDB/MySQL.html">FlattenDB::MySQL</a></li>
-        
-          <li><a href="../FlattenDB/Version.html">FlattenDB::Version</a></li>
-        
-        </ul>
-        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
-      </div>
-
-      
-    </div>
+    
   </div>
 
-  <div id="documentation">
-    <h1 class="class">FlattenDB::MDB</h1>
-
-    <div id="description" class="description">
-      
-    </div><!-- description -->
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Base.html">FlattenDB::Base</a>
+  
+</nav>
 
     
     
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
     
-    <div id="5Buntitled-5D" class="documentation-section">
-      
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-flatten-21">#flatten!</a>
+    
+    <li ><a href="#method-i-parse">#parse</a>
+    
+    <li ><a href="#method-i-to_xml">#to_xml</a>
+    
+  </ul>
+</nav>
 
-      
+  </div>
 
-      
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
 
-      
+  <ul>
+  
+    <li class="file"><a href="../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../ChangeLog.html">ChangeLog</a>
+  
+    <li class="file"><a href="../README.html">README</a>
+  
+  </ul>
+</nav>
 
-      <!-- Methods -->
-      
-      <div id="public-class-method-details" class="method-section section">
-        <h3 class="section-header">Public Class Methods</h3>
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
 
-      
-        <div id="new-method" class="method-detail ">
-          <a name="method-c-new"></a>
+  <ul class="link-list">
+  
+    <li><a href="../FlattenDB.html">FlattenDB</a>
+  
+    <li><a href="../FlattenDB/Base.html">FlattenDB::Base</a>
+  
+    <li><a href="../FlattenDB/CLI.html">FlattenDB::CLI</a>
+  
+    <li><a href="../FlattenDB/MDB.html">FlattenDB::MDB</a>
+  
+    <li><a href="../FlattenDB/MySQL.html">FlattenDB::MySQL</a>
+  
+    <li><a href="../FlattenDB/Version.html">FlattenDB::Version</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class FlattenDB::MDB</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="Base.html#method-c-new">FlattenDB::Base.new</a>
+            </div>
+          
 
           
-          <div class="method-heading">
-            <span class="method-name">new</span><span
-              class="method-args">(options)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="new-source">
-<pre>
-<span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 37</span>
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-identifier">parse</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- new-source -->
-            
-          </div>
-
+          </div><!-- new-source -->
           
+        </div>
 
-          
-        </div><!-- new-method -->
+        
 
-      
-      </div><!-- public-class-method-details -->
+        
+      </div><!-- new-method -->
+
     
-      <div id="public-instance-method-details" class="method-section section">
-        <h3 class="section-header">Public Instance Methods</h3>
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
 
-      
-        <div id="flatten-21-method" class="method-detail ">
-          <a name="method-i-flatten-21"></a>
+    
+      <div id="method-i-flatten-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flatten!</span><span
+            class="method-args">(options = {}, builder_options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
 
           
-          <div class="method-heading">
-            <span class="method-name">flatten!</span><span
-              class="method-args">(options = {}, builder_options = {})</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="flatten-21-source">
-<pre>
-<span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 53</span>
+          <div class="method-source-code" id="flatten-21-source">
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten!</span>(<span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">builder_options</span> = {})
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- flatten-21-source -->
-            
-          </div>
+          </div><!-- flatten-21-source -->
+          
+        </div>
 
+        
+
+        
+      </div><!-- flatten-21-method -->
+
+    
+      <div id="method-i-parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
           
 
           
-        </div><!-- flatten-21-method -->
-
-      
-        <div id="parse-method" class="method-detail ">
-          <a name="method-i-parse"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">parse</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="parse-source">
-<pre>
-<span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 42</span>
+          <div class="method-source-code" id="parse-source">
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse</span>
-  <span class="ruby-identifier">tables_cmd</span>, <span class="ruby-identifier">export_cmd</span> = <span class="ruby-string">'mdb-tables'</span>, <span class="ruby-string">'mdb-export'</span>
+  <span class="ruby-identifier">tables_cmd</span>, <span class="ruby-identifier">export_cmd</span> = <span class="ruby-string">&#39;mdb-tables&#39;</span>, <span class="ruby-string">&#39;mdb-export&#39;</span>
 
   [<span class="ruby-identifier">tables_cmd</span>, <span class="ruby-identifier">export_cmd</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">cmd</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">which</span>(<span class="ruby-identifier">cmd</span>)
-    <span class="ruby-identifier">abort</span> <span class="ruby-node">&quot;Command not found: #{cmd}! Please install `mdbtools' first.&quot;</span>
+    <span class="ruby-identifier">abort</span> <span class="ruby-node">&quot;Command not found: #{cmd}! Please install `mdbtools&#39; first.&quot;</span>
   }
 
   <span class="ruby-comment"># ...</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- parse-source -->
-            
-          </div>
+          </div><!-- parse-source -->
+          
+        </div>
 
+        
+
+        
+      </div><!-- parse-method -->
+
+    
+      <div id="method-i-to_xml" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_xml</span><span
+            class="method-args">(output = output, builder_options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
           
 
           
-        </div><!-- parse-method -->
-
-      
-        <div id="to_xml-method" class="method-detail ">
-          <a name="method-i-to_xml"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">to_xml</span><span
-              class="method-args">(output = output, builder_options = {})</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="to_xml-source">
-<pre>
-<span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 57</span>
+          <div class="method-source-code" id="to_xml-source">
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mdb.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_xml</span>(<span class="ruby-identifier">output</span> = <span class="ruby-identifier">output</span>, <span class="ruby-identifier">builder_options</span> = {})
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- to_xml-source -->
-            
-          </div>
-
+          </div><!-- to_xml-source -->
           
+        </div>
 
-          
-        </div><!-- to_xml-method -->
+        
 
-      
-      </div><!-- public-instance-method-details -->
+        
+      </div><!-- to_xml-method -->
+
     
-    </div><!-- 5Buntitled-5D -->
+    </section><!-- public-instance-method-details -->
   
+  </section><!-- 5Buntitled-5D -->
 
-  </div><!-- documentation -->
+</div><!-- documentation -->
 
-  <div id="validator-badges">
-    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-      Rdoc Generator</a> 2</small>.</p>
-  </div>
 
-</body>
-</html>
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 
