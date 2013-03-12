@@ -36,7 +36,7 @@ module FlattenDB
 
   class MySQL < Base
 
-    JOIN_KEY = '@key'
+    JOIN_KEY = :@key
 
     attr_reader :type, :name, :tables, :builder
 
@@ -145,7 +145,7 @@ module FlattenDB
           when Array
             inject_foreign(tables, primary_table, foreign_table, *spec)
           when Hash
-            raise ArgumentError, "invalid join table spec, '#{JOIN_KEY}' missing" unless spec.has_key?(JOIN_KEY)
+            raise ArgumentError, "invalid join table spec, #{JOIN_KEY.inspect} missing" unless spec.has_key?(JOIN_KEY)
 
             join_key_spec = spec.delete(JOIN_KEY)
 

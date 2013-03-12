@@ -2,11 +2,11 @@ object:
   attr1: ObjID
   attr2: ObjID
   fooobject:
-    @key: ObjID
+    :@key: ObjID
     attr1: attr1ID
     attr3: attr3ID
   barobject:
-    @key: ObjID
+    :@key: ObjID
     attr4: attr4ID
 
 #primary_table:
