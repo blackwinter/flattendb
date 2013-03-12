@@ -29,7 +29,7 @@
 #++
 
 require 'libxml'
-require 'athena'
+require 'nuggets/util/mysql'
 require 'flattendb'
 
 module FlattenDB
@@ -99,38 +99,23 @@ module FlattenDB
     end
 
     def parse_sql(tables)
-      columns, table, name = Hash.new { |h, k| h[k] = [] }, nil, nil
-      parser = Athena::Formats::MySQL::SQLParser.new
+      name = nil
 
-      input.each { |line|
-        case line
-          when /\AUSE\s+`(.+?)`/i
+      Util::MySQL::Parser.parse(input) { |event, *args|
+        case event
+          when :use
             raise 'dump file contains more than one database' if name
-            name = $1
-          when /\ACREATE\s+TABLE\s+`(.+?)`/i
-            table = $1
-          when /\A\s+`(.+?)`/
-            columns[table] << $1 if table
-          when /\A\).*;\Z/
-            table = nil
-          when /\AINSERT\s+INTO\s+`(.+?)`\s+(?:\((.+?)\)\s+)?VALUES\s*(.*);\Z/i
-            _table, _columns, _values = $1, $2, $3
+            name = args.first
+          when :insert
+            fields, _, table, columns, values = {}, *args
 
-            _columns = _columns.nil? ? columns[_table] :
-              _columns.split(/\s*,\s*/).each { |column| column.delete!('`') }
-
-            next if _columns.empty?
-
-            parser.parse(_values) { |row|
-              fields = {}
-
-              row.each_with_index { |value, index|
-                column = _columns[index] or next
+            values.each_with_index { |value, index|
+              if column = columns[index]
                 fields[column] = value.to_s
-              }
-
-              (tables[_table] ||= []) << fields
+              end
             }
+
+            (tables[table] ||= []) << fields
         end
       }
 
