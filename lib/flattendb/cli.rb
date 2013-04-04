@@ -28,12 +28,12 @@
 ###############################################################################
 #++
 
-require 'nuggets/util/cli'
+require 'nuggets/cli'
 require 'flattendb'
 
 module FlattenDB
 
-  class CLI < ::Util::CLI
+  class CLI < ::Nuggets::CLI
 
     TYPES = {
       :mysql => {

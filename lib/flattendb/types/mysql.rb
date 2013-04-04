@@ -29,7 +29,7 @@
 #++
 
 require 'libxml'
-require 'nuggets/util/mysql'
+require 'nuggets/mysql'
 require 'flattendb'
 
 module FlattenDB
@@ -101,7 +101,7 @@ module FlattenDB
     def parse_sql(tables)
       name = nil
 
-      Util::MySQL::Parser.parse(input) { |event, *args|
+      Nuggets::MySQL::Parser.parse(input) { |event, *args|
         case event
           when :use
             raise 'dump file contains more than one database' if name

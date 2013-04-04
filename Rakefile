@@ -14,7 +14,7 @@ begin
       :summary      => %q{Flatten relational databases.},
       :author       => %q{Jens Wille},
       :email        => %q{jens.wille@gmail.com},
-      :dependencies => %w[builder highline libxml-ruby] << ['ruby-nuggets', '>= 0.9.1']
+      :dependencies => %w[builder highline libxml-ruby] << ['ruby-nuggets', '>= 0.9.2']
     }
   }}
 rescue LoadError => err
