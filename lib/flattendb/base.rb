@@ -76,7 +76,7 @@ module FlattenDB
       config = options.select { |k, _| k.is_a?(String) }
       raise ArgumentError, "can't have more than one primary (root) table" if config.size > 1
 
-      (@root, @config), _ = *config  # get "first" (and only) hash element
+      @root, @config = config.keys.first, config.values.first
 
       @input, @output = options.values_at(:input, :output)
     end

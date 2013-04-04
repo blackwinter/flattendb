@@ -52,7 +52,7 @@ module FlattenDB
       # ...
     end
 
-    def flatten!(options = {}, builder_options = {})
+    def flatten!(options = {})
       self
     end
 

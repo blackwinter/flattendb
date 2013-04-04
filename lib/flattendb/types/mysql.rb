@@ -51,7 +51,7 @@ module FlattenDB
       [send("parse_#{type}", tables) || 'root', tables]
     end
 
-    def flatten!(options = {}, builder_options = {})
+    def flatten!(options = {})
       flatten_tables!(tables, root, config)
       self
     end
@@ -63,13 +63,10 @@ module FlattenDB
 
       if tables.size > 1
         builder.tag!(name) {
-          tables.sort.each { |table, rows|
-            table_to_xml(table, rows, builder)
-          }
+          tables.sort.each { |table, rows| table_to_xml(table, rows, builder) }
         }
       else
-        (table, rows), _ = *tables  # get "first" (and only) hash element
-        table_to_xml(name, rows, builder)
+        table_to_xml(name, tables.values.first, builder)
       end
 
       self
@@ -130,28 +127,47 @@ module FlattenDB
           when Array
             inject_foreign(tables, primary_table, foreign_table, *spec)
           when Hash
-            raise ArgumentError, "invalid join table spec, #{JOIN_KEY.inspect} missing" unless spec.has_key?(JOIN_KEY)
+            unless spec.has_key?(JOIN_KEY)
+              raise ArgumentError,
+                "invalid join table spec, #{JOIN_KEY.inspect} missing"
+            end
 
-            join_key_spec = spec.delete(JOIN_KEY)
+            unless (join_key_spec = spec.delete(JOIN_KEY)).is_a?(Hash)
+              join_key_spec = { foreign_table => join_key_spec }
+            end
 
-            joined_tables = tables.dup
-            flatten_tables!(joined_tables, foreign_table, spec)
+            flatten_tables!(foreign_tables = tables.dup, foreign_table, spec)
 
-            (join_key_spec.is_a?(Hash) ? join_key_spec : { foreign_table => join_key_spec }).each { |foreign_table_name, join_key|
+            join_key_spec.each { |foreign_table_name, join_key|
               local_key, foreign_key = join_key
 
-              inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key || local_key, joined_tables, foreign_table_name)
+              inject_foreign(
+                tables, primary_table, foreign_table,
+                local_key, foreign_key || local_key,
+                foreign_tables, foreign_table_name
+              )
             }
           else
-            raise ArgumentError, "don't know how to handle spec of type '#{spec.class}'"
+            raise ArgumentError,
+              "don't know how to handle spec of type #{spec.class}"
         end
       } if config
 
       tables.delete_if { |table, _| table != primary_table }
     end
 
-    def inject_foreign(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table)
-      raise ArgumentError, "no such foreign table: #{foreign_table}" unless foreign_tables.has_key?(foreign_table)
+    def inject_foreign(
+      tables, primary_table, foreign_table,
+      local_key, foreign_key = local_key,
+      foreign_tables = tables, foreign_table_name = foreign_table
+    )
+      unless tables.has_key?(primary_table)
+        raise ArgumentError, "no such primary table: #{primary_table}"
+      end
+
+      unless foreign_tables.has_key?(foreign_table)
+        raise ArgumentError, "no such foreign table: #{foreign_table}"
+      end
 
       foreign_rows = Hash.new { |h, k| h[k] = [] }
 
@@ -169,32 +185,27 @@ module FlattenDB
 
     def table_to_xml(table, rows, builder)
       builder.tag!(table) {
-        rows.each { |row|
-          row_to_xml('row', row, builder)
-        } if rows
+        rows.each { |row| row_to_xml('row', row, builder) } if rows
       }
     end
 
     def row_to_xml(name, row, builder)
       builder.tag!(name) {
-        row.sort.each { |field, content|
-          field_to_xml(field, content, builder)
-        }
+        row.sort.each { |field, value| field_to_xml(field, value, builder) }
       }
     end
 
-    def field_to_xml(field, content, builder)
-      case content
+    def field_to_xml(field, value, builder)
+      case value
         when String, Numeric, true, false, nil
-          builder.tag!(column_to_element(field), content)
+          builder.tag!(column_to_element(field), value)
         when Array
-          content.each { |item|
-            field_to_xml(field, item, builder)
-          }
+          value.each { |item| field_to_xml(field, item, builder) }
         when Hash
-          row_to_xml(field, content, builder)
+          row_to_xml(field, value, builder)
         else
-          raise ArgumentError, "don't know how to handle content of type '#{content.class}'"
+          raise ArgumentError,
+            "don't know how to handle value of type #{value.class}"
       end
     end
 
