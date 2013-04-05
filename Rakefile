@@ -4,12 +4,8 @@ begin
   require 'hen'
 
   Hen.lay! {{
-    :rubyforge => {
-      :project => %q{prometheus},
-      :package => %q{flattendb}
-    },
-
     :gem => {
+      :name         => %q{flattendb},
       :version      => FlattenDB::VERSION,
       :summary      => %q{Flatten relational databases.},
       :author       => %q{Jens Wille},

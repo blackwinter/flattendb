@@ -13,9 +13,9 @@ TODO: well, the description... ;-)
 == LINKS
 
 <b></b>
-Documentation::     http://prometheus.rubyforge.org/flattendb
-Source code::       http://github.com/blackwinter/flattendb
-RubyForge project:: http://rubyforge.org/projects/prometheus
+Documentation:: http://blackwinter.github.com/flattendb
+Source code::   http://github.com/blackwinter/flattendb
+RubyGem::       http://rubygems.org/gems/flattendb
 
 
 == AUTHORS
