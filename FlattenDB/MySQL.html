@@ -286,7 +286,7 @@
         
         <div class="method-heading">
           <span class="method-name">flatten!</span><span
-            class="method-args">(options = {}, builder_options = {})</span>
+            class="method-args">(options = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -302,7 +302,7 @@
           
           <div class="method-source-code" id="flatten-21-source">
             <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 54</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten!</span>(<span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">builder_options</span> = {})
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten!</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">flatten_tables!</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">root</span>, <span class="ruby-identifier">config</span>)
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
@@ -376,13 +376,10 @@
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
     <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">name</span>) {
-      <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">builder</span>)
-      }
+      <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span><span class="ruby-operator">|</span> <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">builder</span>) }
     }
   <span class="ruby-keyword">else</span>
-    (<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>), <span class="ruby-identifier">_</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">tables</span>  <span class="ruby-comment"># get &quot;first&quot; (and only) hash element</span>
-    <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">builder</span>)
+    <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">self</span>
@@ -407,7 +404,7 @@
         
         <div class="method-heading">
           <span class="method-name">field_to_xml</span><span
-            class="method-args">(field, content, builder)</span>
+            class="method-args">(field, value, builder)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -422,19 +419,18 @@
 
           
           <div class="method-source-code" id="field_to_xml-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 186</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">builder</span>)
-  <span class="ruby-keyword">case</span> <span class="ruby-identifier">content</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">builder</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
     <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">Numeric</span>, <span class="ruby-keyword">true</span>, <span class="ruby-keyword">false</span>, <span class="ruby-keyword">nil</span>
-      <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">column_to_element</span>(<span class="ruby-identifier">field</span>), <span class="ruby-identifier">content</span>)
+      <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">column_to_element</span>(<span class="ruby-identifier">field</span>), <span class="ruby-identifier">value</span>)
     <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
-      <span class="ruby-identifier">content</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">item</span>, <span class="ruby-identifier">builder</span>)
-      }
+      <span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">item</span>, <span class="ruby-identifier">builder</span>) }
     <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
-      <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">builder</span>)
+      <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">builder</span>)
     <span class="ruby-keyword">else</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;don&#39;t know how to handle content of type &#39;#{content.class}&#39;&quot;</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
+        <span class="ruby-node">&quot;don&#39;t know how to handle value of type #{value.class}&quot;</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- field_to_xml-source -->
@@ -466,7 +462,7 @@
 
           
           <div class="method-source-code" id="flatten_tables-21-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten_tables!</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">config</span>)
   <span class="ruby-identifier">config</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">spec</span>
@@ -475,20 +471,30 @@
       <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
         <span class="ruby-identifier">inject_foreign</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">spec</span>)
       <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;invalid join table spec, #{JOIN_KEY.inspect} missing&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-constant">JOIN_KEY</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-constant">JOIN_KEY</span>)
+          <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
+            <span class="ruby-node">&quot;invalid join table spec, #{JOIN_KEY.inspect} missing&quot;</span>
+        <span class="ruby-keyword">end</span>
 
-        <span class="ruby-identifier">join_key_spec</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-constant">JOIN_KEY</span>)
+        <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">join_key_spec</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-constant">JOIN_KEY</span>)).<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+          <span class="ruby-identifier">join_key_spec</span> = { <span class="ruby-identifier">foreign_table</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">join_key_spec</span> }
+        <span class="ruby-keyword">end</span>
 
-        <span class="ruby-identifier">joined_tables</span> = <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">dup</span>
-        <span class="ruby-identifier">flatten_tables!</span>(<span class="ruby-identifier">joined_tables</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">spec</span>)
+        <span class="ruby-identifier">foreign_tables</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">tables</span>))
+        <span class="ruby-identifier">flatten_tables!</span>(<span class="ruby-identifier">foreign_tables</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">spec</span>)
 
-        (<span class="ruby-identifier">join_key_spec</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">join_key_spec</span> <span class="ruby-operator">:</span> { <span class="ruby-identifier">foreign_table</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">join_key_spec</span> }).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">foreign_table_name</span>, <span class="ruby-identifier">join_key</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">join_key_spec</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">foreign_table_name</span>, <span class="ruby-identifier">join_key</span><span class="ruby-operator">|</span>
           <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">join_key</span>
 
-          <span class="ruby-identifier">inject_foreign</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">joined_tables</span>, <span class="ruby-identifier">foreign_table_name</span>)
+          <span class="ruby-identifier">inject_foreign</span>(
+            <span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>,
+            <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">local_key</span>,
+            <span class="ruby-identifier">foreign_tables</span>, <span class="ruby-identifier">foreign_table_name</span>
+          )
         }
       <span class="ruby-keyword">else</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;don&#39;t know how to handle spec of type &#39;#{spec.class}&#39;&quot;</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
+          <span class="ruby-node">&quot;don&#39;t know how to handle spec of type #{spec.class}&quot;</span>
     <span class="ruby-keyword">end</span>
   } <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>
 
@@ -508,7 +514,7 @@
         
         <div class="method-heading">
           <span class="method-name">inject_foreign</span><span
-            class="method-args">(tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table)</span>
+            class="method-args">( tables, primary_table, foreign_table, local_key, foreign_key = local_key, foreign_tables = tables, foreign_table_name = foreign_table )</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -523,9 +529,19 @@
 
           
           <div class="method-source-code" id="inject_foreign-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 153</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">inject_foreign</span>(<span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>, <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_tables</span> = <span class="ruby-identifier">tables</span>, <span class="ruby-identifier">foreign_table_name</span> = <span class="ruby-identifier">foreign_table</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;no such foreign table: #{foreign_table}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">foreign_tables</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">foreign_table</span>)
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inject_foreign</span>(
+  <span class="ruby-identifier">tables</span>, <span class="ruby-identifier">primary_table</span>, <span class="ruby-identifier">foreign_table</span>,
+  <span class="ruby-identifier">local_key</span>, <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">local_key</span>,
+  <span class="ruby-identifier">foreign_tables</span> = <span class="ruby-identifier">tables</span>, <span class="ruby-identifier">foreign_table_name</span> = <span class="ruby-identifier">foreign_table</span>
+)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tables</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">primary_table</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;no such primary table: #{primary_table}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">foreign_tables</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">foreign_table</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;no such foreign table: #{foreign_table}&quot;</span>
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">foreign_rows</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
 
@@ -569,11 +585,11 @@
 
           
           <div class="method-source-code" id="parse_sql-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 101</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_sql</span>(<span class="ruby-identifier">tables</span>)
   <span class="ruby-identifier">name</span> = <span class="ruby-keyword">nil</span>
 
-  <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-constant">MySQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">input</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">event</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+  <span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">MySQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">input</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">event</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">event</span>
       <span class="ruby-keyword">when</span> <span class="ruby-value">:use</span>
         <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;dump file contains more than one database&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>
@@ -622,7 +638,7 @@
 
           
           <div class="method-source-code" id="parse_xml-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_xml</span>(<span class="ruby-identifier">tables</span>)
   <span class="ruby-identifier">document</span> = <span class="ruby-constant">LibXML</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">io</span>(<span class="ruby-identifier">input</span>)
   <span class="ruby-identifier">database</span> = <span class="ruby-identifier">document</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">find_first</span>(<span class="ruby-string">&#39;database[@name]&#39;</span>)
@@ -672,12 +688,10 @@
 
           
           <div class="method-source-code" id="row_to_xml-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 178</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">row</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">name</span>) {
-    <span class="ruby-identifier">row</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">builder</span>)
-    }
+    <span class="ruby-identifier">row</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">field_to_xml</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">builder</span>) }
   }
 <span class="ruby-keyword">end</span></pre>
           </div><!-- row_to_xml-source -->
@@ -709,12 +723,10 @@
 
           
           <div class="method-source-code" id="table_to_xml-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 170</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/types/mysql.rb, line 187</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">table_to_xml</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">builder</span>)
   <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">tag!</span>(<span class="ruby-identifier">table</span>) {
-    <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-string">&#39;row&#39;</span>, <span class="ruby-identifier">row</span>, <span class="ruby-identifier">builder</span>)
-    } <span class="ruby-keyword">if</span> <span class="ruby-identifier">rows</span>
+    <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row_to_xml</span>(<span class="ruby-string">&#39;row&#39;</span>, <span class="ruby-identifier">row</span>, <span class="ruby-identifier">builder</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">rows</span>
   }
 <span class="ruby-keyword">end</span></pre>
           </div><!-- table_to_xml-source -->
@@ -736,7 +748,7 @@
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 
