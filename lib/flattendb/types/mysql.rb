@@ -136,7 +136,8 @@ module FlattenDB
               join_key_spec = { foreign_table => join_key_spec }
             end
 
-            flatten_tables!(foreign_tables = tables.dup, foreign_table, spec)
+            foreign_tables = Marshal.load(Marshal.dump(tables))
+            flatten_tables!(foreign_tables, foreign_table, spec)
 
             join_key_spec.each { |foreign_table_name, join_key|
               local_key, foreign_key = join_key
