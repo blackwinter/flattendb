@@ -1,10 +1,10 @@
-Tue, 16 Apr 2013 12:29:59 +0200
-README	Wed, 10 Apr 2013 11:54:07 +0200
+Tue, 16 Apr 2013 15:55:03 +0200
+README	Tue, 16 Apr 2013 15:50:19 +0200
 COPYING	Fri, 08 Mar 2013 16:30:39 +0100
 ChangeLog	Tue, 16 Apr 2013 12:19:20 +0200
 lib/flattendb.rb	Mon, 11 Mar 2013 16:09:58 +0100
 lib/flattendb/cli.rb	Mon, 25 Mar 2013 17:17:17 +0100
-lib/flattendb/base.rb	Mon, 08 Apr 2013 13:45:45 +0200
-lib/flattendb/version.rb	Wed, 10 Apr 2013 11:54:17 +0200
+lib/flattendb/base.rb	Tue, 16 Apr 2013 15:43:34 +0200
+lib/flattendb/version.rb	Tue, 16 Apr 2013 15:50:25 +0200
 lib/flattendb/types/mdb.rb	Mon, 08 Apr 2013 13:45:45 +0200
 lib/flattendb/types/mysql.rb	Mon, 08 Apr 2013 14:40:57 +0200

@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-<title>class FlattenDB::Base - flattendb Application documentation (v0.2.1)</title>
+<title>class FlattenDB::Base - flattendb Application documentation (v0.2.2)</title>
 
 <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
 
@@ -297,9 +297,12 @@ href="http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name">www.w3.org/TR/2006/RE
             <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">config</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) }
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;can&#39;t have more than one primary (root) table&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
 
-  <span class="ruby-ivar">@root</span>, <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">config</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;can&#39;t have more than one primary (root) table&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@root</span>, <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">first</span>
 
   <span class="ruby-ivar">@input</span>, <span class="ruby-ivar">@output</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-value">:input</span>, <span class="ruby-value">:output</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -443,7 +446,7 @@ href="http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name">www.w3.org/TR/2006/RE
 
           
           <div class="method-source-code" id="flatten-21-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;must be defined by sub-class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -476,7 +479,7 @@ href="http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name">www.w3.org/TR/2006/RE
 
           
           <div class="method-source-code" id="to_xml-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 88</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_xml</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;must be defined by sub-class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -519,7 +522,7 @@ href="http://dev.mysql.com/doc/refman/5.0/en/identifiers.html">dev.mysql.com/doc
 
           
           <div class="method-source-code" id="column_to_element-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">column_to_element</span>(<span class="ruby-identifier">column</span>)
   <span class="ruby-identifier">element</span> = <span class="ruby-identifier">column</span>.<span class="ruby-identifier">dup</span>
 
@@ -557,7 +560,7 @@ href="http://dev.mysql.com/doc/refman/5.0/en/identifiers.html">dev.mysql.com/doc
 
           
           <div class="method-source-code" id="initialize_builder-source">
-            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 94</span>
+            <pre><span class="ruby-comment"># File lib/flattendb/base.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_builder</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">builder_options</span> = {})
   <span class="ruby-identifier">builder_options</span> = (<span class="ruby-constant">BUILDER_OPTIONS</span>[<span class="ruby-identifier">type</span>] <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">builder_options</span>)
 
