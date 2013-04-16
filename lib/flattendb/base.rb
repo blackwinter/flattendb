@@ -74,9 +74,12 @@ module FlattenDB
 
     def initialize(options)
       config = options.select { |k, _| k.is_a?(String) }
-      raise ArgumentError, "can't have more than one primary (root) table" if config.size > 1
 
-      @root, @config = config.first.at(0), config.first.at(1)
+      if config.size > 1
+        raise ArgumentError, "can't have more than one primary (root) table"
+      end
+
+      @root, @config = config.first
 
       @input, @output = options.values_at(:input, :output)
     end
