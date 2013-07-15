@@ -6,16 +6,17 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jens Wille"]
-  s.date = "2013-04-16"
+  s.date = "2013-07-15"
   s.description = "Flatten relational databases."
   s.email = "jens.wille@gmail.com"
   s.executables = ["flattendb", "flattendb.mdb", "flattendb.mysql"]
   s.extra_rdoc_files = ["README", "COPYING", "ChangeLog"]
   s.files = ["lib/flattendb.rb", "lib/flattendb/base.rb", "lib/flattendb/cli.rb", "lib/flattendb/types/mdb.rb", "lib/flattendb/types/mysql.rb", "lib/flattendb/version.rb", "bin/flattendb", "bin/flattendb.mdb", "bin/flattendb.mysql", "COPYING", "ChangeLog", "README", "Rakefile", "example/mysql-sample.flat-sql.xml", "example/mysql-sample.flat.xml", "example/mysql-sample.sql", "example/mysql-sample.xml", "example/mysql-sample2flat.yaml"]
   s.homepage = "http://github.com/blackwinter/flattendb"
+  s.licenses = ["AGPL"]
   s.rdoc_options = ["--charset", "UTF-8", "--line-numbers", "--all", "--title", "flattendb Application documentation (v0.2.2)", "--main", "README"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.3"
+  s.rubygems_version = "2.0.5"
   s.summary = "Flatten relational databases."
 
   if s.respond_to? :specification_version then
