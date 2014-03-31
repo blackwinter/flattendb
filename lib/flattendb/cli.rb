@@ -115,7 +115,7 @@ module FlattenDB
     def type=(type)
       if type
         @type = type.to_s.downcase.to_sym
-        quit "Database type not supported: #{type}" unless TYPES.has_key?(@type)
+        quit "Database type not supported: #{type}" unless TYPES.key?(@type)
       else
         @type = nil
       end

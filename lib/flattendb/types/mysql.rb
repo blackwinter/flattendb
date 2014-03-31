@@ -127,7 +127,7 @@ module FlattenDB
           when Array
             inject_foreign(tables, primary_table, foreign_table, *spec)
           when Hash
-            unless spec.has_key?(JOIN_KEY)
+            unless spec.key?(JOIN_KEY)
               raise ArgumentError,
                 "invalid join table spec, #{JOIN_KEY.inspect} missing"
             end
@@ -162,11 +162,11 @@ module FlattenDB
       local_key, foreign_key = local_key,
       foreign_tables = tables, foreign_table_name = foreign_table
     )
-      unless tables.has_key?(primary_table)
+      unless tables.key?(primary_table)
         raise ArgumentError, "no such primary table: #{primary_table}"
       end
 
-      unless foreign_tables.has_key?(foreign_table)
+      unless foreign_tables.key?(foreign_table)
         raise ArgumentError, "no such foreign table: #{foreign_table}"
       end
 
@@ -177,7 +177,7 @@ module FlattenDB
       }
 
       tables[primary_table].each { |row|
-        if row.has_key?(local_key)
+        if row.key?(local_key)
           rows = foreign_rows[row[local_key]]
           row[foreign_table_name] = rows unless rows.empty?
         end
