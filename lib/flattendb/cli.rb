@@ -7,7 +7,7 @@
 #                         Albertus-Magnus-Platz,                              #
 #                         50923 Cologne, Germany                              #
 #                                                                             #
-# Copyright (C) 2013 Jens Wille                                               #
+# Copyright (C) 2013-2014 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@gmail.com>                                       #
@@ -28,21 +28,21 @@
 ###############################################################################
 #++
 
-require 'nuggets/cli'
+require 'cyclops'
 require 'flattendb'
 
 module FlattenDB
 
-  class CLI < ::Nuggets::CLI
+  class CLI < Cyclops
 
     TYPES = {
       :mysql => {
         :title => 'MySQL',
         :opts  => lambda { |opts, options|
-          opts.on('-x', '--xml', 'Input file is of type XML [This is the default]') {
+          opts.option(:xml, 'Input file is of type XML [This is the default]') {
             options[:type] = :xml
           }
-          opts.on('-s', '--sql', 'Input file is of type SQL') {
+          opts.option(:sql, 'Input file is of type SQL') {
             options[:type] = :sql
           }
         }
@@ -130,33 +130,27 @@ module FlattenDB
 
     def pre_opts(opts)
       if type
-        opts.separator ''
+        opts.separator
         opts.separator "TYPE = #{type} (#{TYPES[type][:title]})"
       end
     end
 
     def opts(opts)
       unless type
-        opts.on('-t', '--type TYPE', 'Type of database [REQUIRED]') { |type|
+        opts.option(:type__TYPE, 'Type of database [REQUIRED]') { |type|
           self.type = type
         }
 
-        opts.separator ''
+        opts.separator
       end
 
-      opts.on('-i', '--input FILE', 'Input file(s) [Default: STDIN]') { |input|
+      opts.option(:input__FILE, 'Input file(s) [Default: STDIN]') { |input|
         (options[:inputs] ||= []) << input
       }
 
-      opts.on('-o', '--output FILE', 'Output file (flat XML) [Default: STDOUT]') { |output|
-        options[:output] = output
-      }
+      opts.option(:output__FILE, 'Output file (flat XML) [Default: STDOUT]')
 
-      opts.on('-c', '--config FILE', "Configuration file (YAML) [Default: #{defaults[:config]}#{' (currently not present)' unless File.readable?(defaults[:config])}]") { |config|
-        options[:config] = config
-      }
-
-      opts.separator ''
+      opts.separator
       opts.separator 'Database-specific options:'
 
       type ? type_options(opts) : @sorted_types.each { |t| type_options(opts, true, t) }
@@ -164,7 +158,7 @@ module FlattenDB
 
     def post_opts(opts)
       unless type
-        opts.separator ''
+        opts.separator
         opts.separator "Supported database types: #{@sorted_types.map { |t| "#{t} (#{TYPES[t][:title]})" }.join(', ')}."
       end
     end
@@ -173,7 +167,7 @@ module FlattenDB
       cfg = TYPES[type]
 
       if heading
-        opts.separator ''
+        opts.separator
         opts.separator " - [#{type}] #{cfg[:title]}"
       end
 
