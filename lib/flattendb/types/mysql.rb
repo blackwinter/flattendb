@@ -7,7 +7,7 @@
 #                         Albertus-Magnus-Platz,                              #
 #                         50923 Cologne, Germany                              #
 #                                                                             #
-# Copyright (C) 2013 Jens Wille                                               #
+# Copyright (C) 2013-2014 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@gmail.com>                                       #
@@ -29,7 +29,7 @@
 #++
 
 require 'libxml'
-require 'nuggets/mysql'
+require 'mysql_parser'
 require 'flattendb'
 
 module FlattenDB
@@ -98,7 +98,7 @@ module FlattenDB
     def parse_sql(tables)
       name = nil
 
-      Nuggets::MySQL::Parser.parse(input) { |event, *args|
+      MysqlParser.parse(input) { |event, *args|
         case event
           when :use
             raise 'dump file contains more than one database' if name
