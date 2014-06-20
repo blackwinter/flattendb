@@ -12,7 +12,7 @@ begin
       :email        => %q{jens.wille@gmail.com},
       :license      => %q{AGPL-3.0},
       :homepage     => :blackwinter,
-      :dependencies => %w[builder cyclops libxml-ruby mysql_parser] << ['ruby-nuggets', '>= 0.9.2']
+      :dependencies => %w[builder cyclops libxml-ruby mysql_parser nuggets]
     }
   }}
 rescue LoadError => err
