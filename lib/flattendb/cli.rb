@@ -163,7 +163,7 @@ module FlattenDB
       end
     end
 
-    def type_options(opts, heading = false, type = type)
+    def type_options(opts, heading = false, type = type())
       cfg = TYPES[type]
 
       if heading

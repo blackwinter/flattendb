@@ -56,7 +56,7 @@ module FlattenDB
       self
     end
 
-    def to_xml(output = output, builder_options = {})
+    def to_xml(output = output(), builder_options = {})
       self
     end
 
