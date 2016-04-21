@@ -38,9 +38,7 @@ module FlattenDB
     @types = {}
 
     BUILDER_OPTIONS = {
-      :xml => {
-        :indent => 2
-      }
+      xml: { indent: 2 }
     }
 
     # cf. <http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name>
@@ -98,7 +96,7 @@ module FlattenDB
 
       @builder = case type
         when :xml
-          Builder::XmlMarkup.new(builder_options.merge(:target => output))
+          Builder::XmlMarkup.new(builder_options.merge(target: output))
         else
           raise ArgumentError, "builder of type '#{type}' not supported"
       end

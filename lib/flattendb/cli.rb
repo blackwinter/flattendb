@@ -36,9 +36,9 @@ module FlattenDB
   class CLI < Cyclops
 
     TYPES = {
-      :mysql => {
-        :title => 'MySQL',
-        :opts  => lambda { |opts, options|
+      mysql: {
+        title: 'MySQL',
+        opts:  lambda { |opts, options|
           opts.option(:xml, 'Input file is of type XML [This is the default]') {
             options[:type] = :xml
           }
@@ -47,9 +47,9 @@ module FlattenDB
           }
         }
       },
-      :mdb => {
-        :title => 'MS Access',
-        :opts  => lambda { |opts, options|
+      mdb: {
+        title: 'MS Access',
+        opts:  lambda { |opts, options|
           opts.separator("    NOTE: Repeat '-i' for each .mdb file")
         }
       }
@@ -59,10 +59,10 @@ module FlattenDB
 
       def defaults
         super.merge(
-          :input  => '-',
-          :inputs => [],
-          :output => '-',
-          :config => 'config.yaml'
+          input:  '-',
+          inputs: [],
+          output: '-',
+          config: 'config.yaml'
         )
       end
 
